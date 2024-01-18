@@ -1,1 +1,1 @@
-export * from './people-roles.constants';
+export * from './people-roles.constant';

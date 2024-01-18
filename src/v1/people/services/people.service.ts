@@ -1,6 +1,8 @@
-import { Body, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { AddPersonDtoBase } from '../dto';
 import { PersonEntity } from '../entities';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class PeopleService {
@@ -8,8 +10,13 @@ export class PeopleService {
     return 'Hello World!';
   }
 
-  addPerson(@Body() addPersonDto: AddPersonDtoBase): PersonEntity {
+  constructor(
+    @InjectRepository(PersonEntity)
+    private peopleRepository: Repository<PersonEntity>,
+  ) {}
+
+  addPerson(addPersonDto: AddPersonDtoBase): Promise<PersonEntity> {
     addPersonDto.format();
-    return addPersonDto.toPersonEntity();
+    return this.peopleRepository.save(addPersonDto.toPersonEntity());
   }
 }

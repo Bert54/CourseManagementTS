@@ -21,9 +21,7 @@ export class PeopleController {
   }
 
   @Post()
-  addUser(@Body() addPersonDto: AddPersonDto): PersonEntity {
-    const res = this.peopleService.addPerson(addPersonDto);
-    console.log(res);
-    return res;
+  addUser(@Body() addPersonDto: AddPersonDto): Promise<PersonEntity> {
+    return this.peopleService.addPerson(addPersonDto);
   }
 }

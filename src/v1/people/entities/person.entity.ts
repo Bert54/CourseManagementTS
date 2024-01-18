@@ -1,14 +1,26 @@
+import {
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  TableInheritance,
+} from 'typeorm';
+
+@Entity('person')
+@TableInheritance({ column: { type: 'varchar', name: 'role' } })
 export abstract class PersonEntity {
-  constructor(name: string, role: number) {
+  protected constructor(name: string, role: string) {
     this.name = name;
     this.role = role;
   }
 
+  @PrimaryGeneratedColumn()
   id: number;
 
+  @Column()
   name: string;
 
-  role: number;
+  @Column()
+  role: string;
 
   abstract getPermissions(): string[];
 }
