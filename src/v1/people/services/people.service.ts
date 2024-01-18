@@ -3,6 +3,8 @@ import { AddPersonDtoBase } from '../dto';
 import { PersonEntity } from '../entities';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { AlreadyExistsError } from '../errors';
+import { BaseError } from '../../../common';
 
 @Injectable()
 export class PeopleService {
@@ -16,7 +18,19 @@ export class PeopleService {
   ) {}
 
   addPerson(addPersonDto: AddPersonDtoBase): Promise<PersonEntity> {
-    addPersonDto.format();
-    return this.peopleRepository.save(addPersonDto.toPersonEntity());
+    let personEntity: PersonEntity;
+    try {
+      personEntity = addPersonDto.toPersonEntity();
+    } catch (error) {
+      return new Promise<PersonEntity>(() => {
+        throw error;
+      });
+    }
+
+    return this.peopleRepository.save(personEntity).catch(() => {
+      throw new AlreadyExistsError(
+        `Person with name '${personEntity.name}' already exists`,
+      );
+    });
   }
 }

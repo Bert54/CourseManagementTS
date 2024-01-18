@@ -1,7 +1,9 @@
-import { InjectRepository } from '@nestjs/typeorm';
-import { PersonEntity } from '../entities';
-import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+
+import { Repository } from 'typeorm';
+
+import { PersonEntity } from '../entities';
 
 @Injectable()
 export class PeopleDao {

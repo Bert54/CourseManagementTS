@@ -1,5 +1,5 @@
-import { SqlDatabaseConfig } from './config';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { SqlDatabaseConfig } from './interfaces';
 
 export const setupSqlDatabase = (
   config: SqlDatabaseConfig,

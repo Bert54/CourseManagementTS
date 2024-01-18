@@ -11,7 +11,8 @@ export abstract class AddPersonDtoBase {
   role: string;
 
   format(): void {
-    this.role.toLowerCase();
+    this.name = this.name.trim();
+    this.role = this.role.trim().toLowerCase();
   }
 
   abstract toPersonEntity(): PersonEntity;
