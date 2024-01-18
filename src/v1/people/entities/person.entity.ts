@@ -1,4 +1,8 @@
 export abstract class PersonEntity {
+  constructor(name: string, role: number) {
+    this.name = name;
+    this.role = role;
+  }
 
   id: number;
 
@@ -7,5 +11,4 @@ export abstract class PersonEntity {
   role: number;
 
   abstract getPermissions(): string[];
-
 }

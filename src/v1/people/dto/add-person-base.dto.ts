@@ -1,15 +1,18 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsString, Length } from 'class-validator';
 import { PersonEntity } from '../entities';
 
 export abstract class AddPersonDtoBase {
-
   @IsString()
   @IsNotEmpty()
+  @Length(2, 100)
   name: string;
 
   @IsString()
   role: string;
 
-  abstract toPersonEntity(): PersonEntity;
+  format(): void {
+    this.role.toLowerCase();
+  }
 
+  abstract toPersonEntity(): PersonEntity;
 }
