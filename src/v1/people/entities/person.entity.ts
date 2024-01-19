@@ -13,7 +13,7 @@ export abstract class PersonEntity {
     this.role = role;
   }
 
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('increment')
   id: number;
 
   @Column()

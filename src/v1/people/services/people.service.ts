@@ -5,7 +5,8 @@ import { Repository } from 'typeorm';
 
 import { AddPersonDtoBase } from '../dto';
 import { PersonEntity } from '../entities';
-import { AlreadyExistsError } from '../errors';
+import { UserAlreadyExistsError } from '../errors';
+import { PeopleDao } from '../dao';
 
 @Injectable()
 export class PeopleService {
@@ -13,10 +14,7 @@ export class PeopleService {
     return 'Hello World!';
   }
 
-  constructor(
-    @InjectRepository(PersonEntity)
-    private peopleRepository: Repository<PersonEntity>,
-  ) {}
+  constructor(private peopleDao: PeopleDao) {}
 
   addPerson(addPersonDto: AddPersonDtoBase): Promise<PersonEntity> {
     let personEntity: PersonEntity;
@@ -28,10 +26,14 @@ export class PeopleService {
       });
     }
 
-    return this.peopleRepository.save(personEntity).catch(() => {
-      throw new AlreadyExistsError(
-        `Person with name '${personEntity.name}' already exists`,
-      );
-    });
+    return this.peopleDao.save(personEntity);
+  }
+
+  getPersonById(id: number): Promise<PersonEntity> {
+    return this.peopleDao.findOneById(id);
+  }
+
+  getPersonByName(name: string): Promise<PersonEntity> {
+    return this.peopleDao.findOneByName(name);
   }
 }

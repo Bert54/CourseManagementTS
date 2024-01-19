@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
-import { BadRequestError } from './bad-request-error';
-import { BaseError } from './base-error';
+
+import { BadRequestError, BaseError, NotFoundError } from './types';
 
 export const handleError = (error: BaseError): HttpException => {
   if (!error) {
@@ -15,6 +15,20 @@ export const handleError = (error: BaseError): HttpException => {
         error: error.message,
       },
       HttpStatus.BAD_REQUEST,
+      {
+        cause: error,
+      },
+    );
+  }
+
+  // NotFoundError => return a 404
+  if (error instanceof NotFoundError) {
+    return new HttpException(
+      {
+        status: HttpStatus.NOT_FOUND,
+        error: error.message,
+      },
+      HttpStatus.NOT_FOUND,
       {
         cause: error,
       },

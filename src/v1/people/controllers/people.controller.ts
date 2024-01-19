@@ -3,6 +3,7 @@ import {
   ClassSerializerInterceptor,
   Controller,
   Get,
+  Param,
   Post,
   UseInterceptors,
 } from '@nestjs/common';
@@ -26,6 +27,22 @@ export class PeopleController {
   addUser(@Body() addPersonDto: AddPersonDto): Promise<PersonEntity> {
     return this.peopleService
       .addPerson(addPersonDto)
+      .catch((error: BaseError) => {
+        throw handleError(error);
+      });
+  }
+
+  @Get('/:id')
+  getUserById(@Param('id') id: number): Promise<PersonEntity> {
+    return this.peopleService.getPersonById(id).catch((error: BaseError) => {
+      throw handleError(error);
+    });
+  }
+
+  @Get('/name/:name')
+  getUserByName(@Param('name') name: string): Promise<PersonEntity> {
+    return this.peopleService
+      .getPersonByName(name)
       .catch((error: BaseError) => {
         throw handleError(error);
       });
