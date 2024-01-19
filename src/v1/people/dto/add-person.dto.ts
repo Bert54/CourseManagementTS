@@ -18,11 +18,11 @@ export class AddPersonDto extends AddPersonDtoBase {
     this.format();
     switch (this.role) {
       case PersonRolesEnum.Administrator:
-        return new AdministratorEntity(this.name, PERSON_ROLE_ADMINISTRATOR);
+        return new AdministratorEntity(this.name);
       case PersonRolesEnum.Teacher:
-        return new TeacherEntity(this.name, PERSON_ROLE_TEACHER);
+        return new TeacherEntity(this.name);
       case PersonRolesEnum.Student:
-        return new StudentEntity(this.name, PERSON_ROLE_STUDENT);
+        return new StudentEntity(this.name);
     }
     throw new UnknownRoleError(`Unknown role: '${this.role}'`);
   }

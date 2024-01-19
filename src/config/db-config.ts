@@ -1,11 +1,11 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+
 import { SqlDatabaseConfig } from './interfaces';
 
 export const setupSqlDatabase = (
   config: SqlDatabaseConfig,
 ): TypeOrmModuleOptions => {
   return {
-    // type: 'postgres',
     type: config.type as any,
     host: config.host,
     port: config.port,
