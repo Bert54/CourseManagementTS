@@ -1,6 +1,6 @@
-import { BaseError } from '../../../common';
+import { BadRequestError } from '../../common';
 
-export class UnknownRoleError extends BaseError {
+export class UnknownRoleError extends BadRequestError {
   constructor(message: string) {
     super(message);
   }

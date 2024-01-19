@@ -6,11 +6,11 @@ import {
   Post,
   UseInterceptors,
 } from '@nestjs/common';
+
 import { PeopleService } from '../services';
 import { AddPersonDto } from '../dto';
 import { PersonEntity } from '../entities';
-import { handleError } from '../errors';
-import { BaseError } from '../../../common';
+import { BaseError, handleError } from '../../common';
 
 @Controller('/people')
 @UseInterceptors(ClassSerializerInterceptor)

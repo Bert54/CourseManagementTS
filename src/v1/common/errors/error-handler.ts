@@ -1,21 +1,16 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
-import { AlreadyExistsError } from './already-exists.error';
-import { BaseError } from '../../../common';
-import { UnknownRoleError } from './unknown-role.error';
+import { BadRequestError } from './bad-request-error';
+import { BaseError } from './base-error';
 
 export const handleError = (error: BaseError): HttpException => {
   if (!error) {
     // no error => log here the inappropriate use of this function
   }
 
-  console.log()
-
-  // AlreadyExistsError, UnknownRoleError => return a 400
-  if (
-    error instanceof AlreadyExistsError ||
-    error instanceof UnknownRoleError
-  ) {
-    return new HttpException({
+  // BadRequestError => return a 400
+  if (error instanceof BadRequestError) {
+    return new HttpException(
+      {
         status: HttpStatus.BAD_REQUEST,
         error: error.message,
       },
@@ -37,4 +32,4 @@ export const handleError = (error: BaseError): HttpException => {
       cause: error,
     },
   );
-}
+};

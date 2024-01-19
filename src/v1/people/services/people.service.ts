@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+
+import { Repository } from 'typeorm';
+
 import { AddPersonDtoBase } from '../dto';
 import { PersonEntity } from '../entities';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 import { AlreadyExistsError } from '../errors';
-import { BaseError } from '../../../common';
 
 @Injectable()
 export class PeopleService {
