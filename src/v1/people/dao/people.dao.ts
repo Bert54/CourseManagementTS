@@ -5,20 +5,27 @@ import { Repository } from 'typeorm';
 
 import { PersonEntity } from '../entities';
 import { UserAlreadyExistsError, UserNotFoundError } from '../errors';
+import { LoggerService } from '../../../common';
 
 @Injectable()
 export class PeopleDao {
   constructor(
     @InjectRepository(PersonEntity)
     private peopleRepository: Repository<PersonEntity>,
+    private logger: LoggerService,
   ) {}
 
   async save(person: PersonEntity): Promise<PersonEntity> {
-    return await this.peopleRepository.save<PersonEntity>(person).catch(() => {
-      throw new UserAlreadyExistsError(
-        `Person with name '${person.name}' already exists`,
-      );
-    });
+    return await this.peopleRepository
+      .save<PersonEntity>(person)
+      .catch((error) => {
+        this.logger.warn(
+          `Could not save new person [error: '${error.message}']`,
+        );
+        throw new UserAlreadyExistsError(
+          `Person with name '${person.name}' already exists`,
+        );
+      });
   }
 
   async findOneById(id: number): Promise<PersonEntity> {
@@ -31,6 +38,12 @@ export class PeopleDao {
           throw new UserNotFoundError(`Person with id '${id}' was not found`);
         }
         return person;
+      })
+      .catch((error) => {
+        this.logger.warn(
+          `Could not fetch person using id [error: '${error.message}']`,
+        );
+        throw error;
       });
   }
 
@@ -46,6 +59,12 @@ export class PeopleDao {
           );
         }
         return person;
+      })
+      .catch((error) => {
+        this.logger.warn(
+          `Could not fetch person using name [error: '${error.message}']`,
+        );
+        throw error;
       });
   }
 }
