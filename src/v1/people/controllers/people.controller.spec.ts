@@ -60,10 +60,6 @@ describe('PeopleController', () => {
       person2.id = 2;
       person2.name = 'natalya';
 
-      peopleService.getPersonById.mockReturnValue(
-        new Promise<PersonEntity>(() => person1),
-      );
-
       peopleService.getPersonById.mockImplementation(
         (id: number): Promise<PersonEntity> => {
           let person: PersonEntity;
