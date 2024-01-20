@@ -5,8 +5,8 @@ import { PERSON_ROLE_TEACHER } from '../constants';
 
 @ChildEntity(PERSON_ROLE_TEACHER)
 export class TeacherEntity extends PersonEntity {
-  constructor(name: string) {
-    super(name);
+  constructor(name: string, id?: number) {
+    super(name, id);
   }
 
   getPermissions(): string[] {
