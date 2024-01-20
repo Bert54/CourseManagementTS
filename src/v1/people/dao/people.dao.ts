@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { PersonEntity } from '../entities';
-import { UserAlreadyExistsError, UserNotFoundError } from '../errors';
+import { PersonAlreadyExistsError, PersonNotFoundError } from '../errors';
 import { LoggerService } from '../../../common';
 
 @Injectable()
@@ -22,7 +22,7 @@ export class PeopleDao {
         this.logger.warn(
           `Could not save new person [error: '${error.message}']`,
         );
-        throw new UserAlreadyExistsError(
+        throw new PersonAlreadyExistsError(
           `Person with name '${person.name}' already exists`,
         );
       });
@@ -35,7 +35,7 @@ export class PeopleDao {
       })
       .then((person: PersonEntity) => {
         if (!person) {
-          throw new UserNotFoundError(`Person with id '${id}' was not found`);
+          throw new PersonNotFoundError(`Person with id '${id}' was not found`);
         }
         return person;
       })
@@ -54,7 +54,7 @@ export class PeopleDao {
       })
       .then((person: PersonEntity) => {
         if (!person) {
-          throw new UserNotFoundError(
+          throw new PersonNotFoundError(
             `Person with name '${name}' was not found`,
           );
         }
