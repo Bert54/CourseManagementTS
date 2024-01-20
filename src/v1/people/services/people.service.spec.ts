@@ -158,11 +158,15 @@ describe('PeopleService', () => {
       const dto = createMock<AddPersonDtoBase>();
       dto.name = 'james';
 
+      dto.toPersonEntity.mockReturnValue(person);
+
       peopleDao.save.mockReturnValue(new Promise<PersonEntity>(() => person));
 
       const gottenPerson = peopleService.addPerson(dto);
 
       expect(gottenPerson).resolves.toBe(person);
+
+      expect(dto.toPersonEntity).toBeCalledTimes(1);
     });
 
     it('should throw an error if the person already exists', () => {
@@ -176,6 +180,8 @@ describe('PeopleService', () => {
       expect(peopleService.addPerson(dto)).rejects.toThrow(
         PersonAlreadyExistsError,
       );
+
+      expect(dto.toPersonEntity).toBeCalledTimes(1);
     });
   });
 });
