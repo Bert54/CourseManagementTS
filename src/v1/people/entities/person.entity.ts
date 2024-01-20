@@ -8,8 +8,9 @@ import {
 @Entity('person')
 @TableInheritance({ column: { type: 'varchar', name: 'role' } })
 export abstract class PersonEntity {
-  protected constructor(name: string) {
+  protected constructor(name: string, id?: number) {
     this.name = name;
+    this.id = id;
   }
 
   @PrimaryGeneratedColumn('increment')

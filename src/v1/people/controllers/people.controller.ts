@@ -20,7 +20,7 @@ export class PeopleController {
   constructor(private readonly peopleService: PeopleService) {}
 
   @Post()
-  addUser(@Body() addPersonDto: AddPersonDto): Promise<PersonEntity> {
+  addPerson(@Body() addPersonDto: AddPersonDto): Promise<PersonEntity> {
     return this.peopleService
       .addPerson(addPersonDto)
       .catch((error: BaseError) => {
@@ -29,14 +29,14 @@ export class PeopleController {
   }
 
   @Get('/:id')
-  getUserById(@Param() id: NumericIdValidator): Promise<PersonEntity> {
+  getPersonById(@Param() id: NumericIdValidator): Promise<PersonEntity> {
     return this.peopleService.getPersonById(id.id).catch((error: BaseError) => {
       throw handleError(error);
     });
   }
 
   @Get('/name/:name')
-  getUserByName(@Param('name') name: string): Promise<PersonEntity> {
+  getPersonByName(@Param('name') name: string): Promise<PersonEntity> {
     return this.peopleService
       .getPersonByName(name)
       .catch((error: BaseError) => {

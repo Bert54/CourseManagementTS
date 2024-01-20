@@ -1,6 +1,6 @@
 import { NotFoundError } from '../../common';
 
-export class UserNotFoundError extends NotFoundError {
+export class PersonNotFoundError extends NotFoundError {
   constructor(message: string) {
     super(message);
   }

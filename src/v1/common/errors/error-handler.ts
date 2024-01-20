@@ -2,6 +2,9 @@ import { HttpException, HttpStatus } from '@nestjs/common';
 
 import { BadRequestError, BaseError, NotFoundError } from './types';
 
+export const genericErrorMessage: string =
+  'Something went wrong while processing the request';
+
 export const handleError = (error: BaseError): HttpException => {
   if (!error) {
     // no error => log here the inappropriate use of this function
@@ -39,7 +42,7 @@ export const handleError = (error: BaseError): HttpException => {
   return new HttpException(
     {
       status: HttpStatus.INTERNAL_SERVER_ERROR,
-      error: 'Something went wrong while processing the request',
+      error: genericErrorMessage,
     },
     HttpStatus.INTERNAL_SERVER_ERROR,
     {

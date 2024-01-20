@@ -1,6 +1,6 @@
 import { BadRequestError } from '../../common';
 
-export class UserAlreadyExistsError extends BadRequestError {
+export class PersonAlreadyExistsError extends BadRequestError {
   constructor(message: string) {
     super(message);
   }
