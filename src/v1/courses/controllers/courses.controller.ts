@@ -1,6 +1,6 @@
 import { Body, Headers, Controller, Post, UseGuards } from '@nestjs/common';
 
-import { CourseBaseEntity } from '../entities';
+import { CourseEntity } from '../entities';
 import {
   BaseError,
   CheckPermission,
@@ -20,7 +20,7 @@ export class CoursesController {
   addCourse(
     @Headers(headerWithPersonId) personId: string,
     @Body() addCourseDto: AddCourseDto,
-  ): Promise<CourseBaseEntity> {
+  ): Promise<CourseEntity> {
     return this.coursesService
       .addCourse(personId, addCourseDto)
       .catch((error: BaseError) => {

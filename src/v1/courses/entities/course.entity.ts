@@ -1,14 +1,34 @@
-import { CourseBaseEntity } from './course-base.entity';
-import { Entity } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity()
-export class CourseEntity extends CourseBaseEntity {
+import { PersonEntity } from '../../people';
+
+@Entity('course')
+export class CourseEntity {
+  @PrimaryGeneratedColumn('increment')
+  id: number;
+
+  @ManyToOne(() => PersonEntity, (person) => person.id)
+  @JoinColumn({ name: 'teacher_id' })
+  teacher_id: number;
+
+  @Column()
+  student_class: string;
+
+  @Column()
+  title: string;
+
+  @Column()
+  content: string;
+
   constructor(
     teacher_id: number,
     student_class: string,
     title: string,
     content: string,
   ) {
-    super(teacher_id, student_class, title, content);
+    this.teacher_id = teacher_id;
+    this.student_class = student_class;
+    this.title = title;
+    this.content = content;
   }
 }

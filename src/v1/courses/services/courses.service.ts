@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CoursesDao } from '../dao';
 import { AddCourseBaseDto } from '../dto';
-import { CourseBaseEntity } from '../entities';
+import { CourseEntity } from '../entities';
 
 @Injectable()
 export class CoursesService {
@@ -10,7 +10,7 @@ export class CoursesService {
   addCourse(
     teacherId: string | number,
     addCourseDto: AddCourseBaseDto,
-  ): Promise<CourseBaseEntity> {
+  ): Promise<CourseEntity> {
     return this.coursesDao.save(addCourseDto.toCourseEntity(teacherId));
   }
 }

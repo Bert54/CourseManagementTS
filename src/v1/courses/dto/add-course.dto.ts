@@ -1,9 +1,9 @@
 import { AddCourseBaseDto } from './add-course-base.dto';
-import { CourseBaseEntity, CourseEntity } from '../entities';
+import { CourseEntity } from '../entities';
 
 export class AddCourseDto extends AddCourseBaseDto {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  toCourseEntity(teacherId: string | number): CourseBaseEntity {
+  toCourseEntity(teacherId: string | number): CourseEntity {
     this.format();
     let tId: number;
     if (typeof teacherId === 'string') {

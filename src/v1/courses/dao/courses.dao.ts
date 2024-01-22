@@ -4,19 +4,19 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { LoggerService } from '../../../common';
-import { CourseBaseEntity } from '../entities';
+import { CourseEntity } from '../entities';
 
 @Injectable()
 export class CoursesDao {
   constructor(
-    @InjectRepository(CourseBaseEntity)
-    private coursesRepository: Repository<CourseBaseEntity>,
+    @InjectRepository(CourseEntity)
+    private coursesRepository: Repository<CourseEntity>,
     private logger: LoggerService,
   ) {}
 
-  async save(course: CourseBaseEntity): Promise<CourseBaseEntity> {
+  async save(course: CourseEntity): Promise<CourseEntity> {
     return await this.coursesRepository
-      .save<CourseBaseEntity>(course)
+      .save<CourseEntity>(course)
       .catch((error) => {
         this.logger.warn(
           `Could not save new course [error: '${error.message}']`,

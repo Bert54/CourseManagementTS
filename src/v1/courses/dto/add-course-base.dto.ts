@@ -1,4 +1,4 @@
-import { CourseBaseEntity } from '../entities';
+import { CourseEntity } from '../entities';
 import { IsNotEmpty, IsString, Length } from 'class-validator';
 
 export abstract class AddCourseBaseDto {
@@ -22,5 +22,5 @@ export abstract class AddCourseBaseDto {
     this.content = this.content.trim();
   }
 
-  abstract toCourseEntity(teacherId: string | number): CourseBaseEntity;
+  abstract toCourseEntity(teacherId: string | number): CourseEntity;
 }
