@@ -1,10 +1,14 @@
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { PeopleModule } from '../people';
 import { CoursesController } from './controllers';
+import { CoursesService } from './services';
+import { CoursesDao } from './dao';
+import { CourseBaseEntity, CourseEntity } from './entities';
 
 @Module({
-  imports: [PeopleModule],
+  imports: [TypeOrmModule.forFeature([CourseBaseEntity, CourseEntity])],
   controllers: [CoursesController],
+  providers: [CoursesService, CoursesDao],
 })
 export class CoursesModule {}

@@ -10,8 +10,7 @@ import {
   handleError,
   UnauthorizedError,
 } from '../../../errors';
-
-const headerWithPersonId: string = 'x-personid';
+import { headerWithPersonId } from '../../../../../common';
 
 @Injectable()
 export class CheckPermissionGuard implements CanActivate {
