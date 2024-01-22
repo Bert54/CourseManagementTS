@@ -1,12 +1,4 @@
-import {
-  Body,
-  ClassSerializerInterceptor,
-  Controller,
-  Get,
-  Param,
-  Post,
-  UseInterceptors,
-} from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 
 import { PeopleService } from '../services';
 import { AddPersonDto } from '../dto';
@@ -15,7 +7,6 @@ import { BaseError, handleError } from '../../common';
 import { NumericIdValidator } from '../../../common';
 
 @Controller('/people')
-@UseInterceptors(ClassSerializerInterceptor)
 export class PeopleController {
   constructor(private readonly peopleService: PeopleService) {}
 

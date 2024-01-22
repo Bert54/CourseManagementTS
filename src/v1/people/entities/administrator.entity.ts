@@ -10,6 +10,6 @@ export class AdministratorEntity extends PersonEntity {
   }
 
   getPermissions(): string[] {
-    return ['administrator_tmp'];
+    return [];
   }
 }

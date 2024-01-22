@@ -21,5 +21,6 @@ import { PeopleDao } from './dao';
   ],
   controllers: [PeopleController],
   providers: [PeopleService, PeopleDao],
+  exports: [PeopleService],
 })
 export class PeopleModule {}

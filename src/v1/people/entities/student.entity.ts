@@ -10,6 +10,6 @@ export class StudentEntity extends PersonEntity {
   }
 
   getPermissions(): string[] {
-    return ['student_tmp'];
+    return [];
   }
 }
