@@ -6,11 +6,6 @@ import {
   TeacherEntity,
 } from '../entities';
 import { PersonRolesEnum } from '../enums';
-import {
-  PERSON_ROLE_ADMINISTRATOR,
-  PERSON_ROLE_STUDENT,
-  PERSON_ROLE_TEACHER,
-} from '../constants';
 import { UnknownRoleError } from '../errors';
 
 export class AddPersonDto extends AddPersonDtoBase {

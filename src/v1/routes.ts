@@ -1,8 +1,15 @@
 import { PeopleModule } from './people';
+import { CoursesModule } from './courses';
+
+export const v1Prefix = '/api/v1';
 
 export const RouteMapping = [
   {
-    path: '/api/v1',
+    path: v1Prefix,
     module: PeopleModule,
+  },
+  {
+    path: v1Prefix,
+    module: CoursesModule,
   },
 ];
