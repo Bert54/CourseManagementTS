@@ -1,4 +1,11 @@
-import { Body, Headers, Controller, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Headers,
+  Controller,
+  Post,
+  UseGuards,
+  Get,
+} from '@nestjs/common';
 
 import { CourseEntity } from '../entities';
 import {
@@ -7,7 +14,11 @@ import {
   CheckPermissionGuard,
   handleError,
 } from '../../common';
-import { COURSE_CREATE, headerWithPersonId } from '../../../common';
+import {
+  COURSE_CREATE,
+  COURSE_FETCH,
+  headerWithPersonId,
+} from '../../../common';
 import { AddCourseDto } from '../dto';
 import { CoursesService } from '../services';
 
@@ -23,6 +34,19 @@ export class CoursesController {
   ): Promise<CourseEntity> {
     return this.coursesService
       .addCourse(personId, addCourseDto)
+      .catch((error: BaseError) => {
+        throw handleError(error);
+      });
+  }
+
+  @Get()
+  @UseGuards(CheckPermissionGuard)
+  @CheckPermission(COURSE_FETCH)
+  getAllOwnCourses(
+    @Headers(headerWithPersonId) personId: string,
+  ): Promise<CourseEntity[]> {
+    return this.coursesService
+      .getAllOwnCourses(personId)
       .catch((error: BaseError) => {
         throw handleError(error);
       });

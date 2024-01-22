@@ -24,4 +24,10 @@ export class CoursesDao {
         throw error;
       });
   }
+
+  async findAllByTeacherId(teacherId: number): Promise<CourseEntity[]> {
+    return await this.coursesRepository.findBy({
+      teacher_id: teacherId,
+    });
+  }
 }
