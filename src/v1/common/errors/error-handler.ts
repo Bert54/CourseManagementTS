@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
 
-import { BadRequestError, BaseError, NotFoundError } from './types';
+import { BadRequestError, BaseError, ForbiddenError, NotFoundError, UnauthorizedError } from './types';
 
 export const genericErrorMessage: string =
   'Something went wrong while processing the request';
@@ -32,6 +32,34 @@ export const handleError = (error: BaseError): HttpException => {
         error: error.message,
       },
       HttpStatus.NOT_FOUND,
+      {
+        cause: error,
+      },
+    );
+  }
+
+  // UnauthorizedError => return a 401
+  if (error instanceof UnauthorizedError) {
+    return new HttpException(
+      {
+        status: HttpStatus.UNAUTHORIZED,
+        error: error.message,
+      },
+      HttpStatus.UNAUTHORIZED,
+      {
+        cause: error,
+      },
+    );
+  }
+
+  // ForbiddenError => return a 403
+  if (error instanceof ForbiddenError) {
+    return new HttpException(
+      {
+        status: HttpStatus.FORBIDDEN,
+        error: error.message,
+      },
+      HttpStatus.FORBIDDEN,
       {
         cause: error,
       },
