@@ -14,13 +14,11 @@ export class CoursesService {
     return this.coursesDao.save(addCourseDto.toCourseEntity(teacherId));
   }
 
-  getAllOwnCourses(teacherId: string | number): Promise<CourseEntity[]> {
-    let tId: number;
-    if (typeof teacherId == 'string') {
-      tId = Number(teacherId);
-    } else {
-      tId = teacherId;
-    }
-    return this.coursesDao.findAllByTeacherId(tId);
+  getAllOwnCourses(teacherId: number): Promise<CourseEntity[]> {
+    return this.coursesDao.findAllByTeacherId(teacherId);
+  }
+
+  getOneOwnCourse(courseId: number, teacherId: number): Promise<CourseEntity> {
+    return this.coursesDao.findOne(courseId, teacherId);
   }
 }

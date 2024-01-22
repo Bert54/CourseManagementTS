@@ -5,6 +5,7 @@ import {
   Post,
   UseGuards,
   Get,
+  Param,
 } from '@nestjs/common';
 
 import { CourseEntity } from '../entities';
@@ -18,6 +19,7 @@ import {
   COURSE_CREATE,
   COURSE_FETCH,
   headerWithPersonId,
+  NumericIdValidator,
 } from '../../../common';
 import { AddCourseDto } from '../dto';
 import { CoursesService } from '../services';
@@ -45,8 +47,34 @@ export class CoursesController {
   getAllOwnCourses(
     @Headers(headerWithPersonId) personId: string,
   ): Promise<CourseEntity[]> {
+    let tId: number;
+    if (typeof personId == 'string') {
+      tId = Number(personId);
+    } else {
+      tId = personId;
+    }
     return this.coursesService
-      .getAllOwnCourses(personId)
+      .getAllOwnCourses(tId)
+      .catch((error: BaseError) => {
+        throw handleError(error);
+      });
+  }
+
+  @Get('/:id')
+  @UseGuards(CheckPermissionGuard)
+  @CheckPermission(COURSE_FETCH)
+  getOneCourse(
+    @Headers(headerWithPersonId) personId: string,
+    @Param() id: NumericIdValidator,
+  ): Promise<CourseEntity> {
+    let tId: number;
+    if (typeof personId == 'string') {
+      tId = Number(personId);
+    } else {
+      tId = personId;
+    }
+    return this.coursesService
+      .getOneOwnCourse(id.id, tId)
       .catch((error: BaseError) => {
         throw handleError(error);
       });

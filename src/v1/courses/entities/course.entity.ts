@@ -8,8 +8,8 @@ export class CourseEntity {
   id: number;
 
   @ManyToOne(() => PersonEntity, (person) => person.id)
-  @Column({ name: 'teacher_id' })
   @JoinColumn({ name: 'teacher_id' })
+  @Column({ name: 'teacher_id' })
   teacher_id: number;
 
   @Column()

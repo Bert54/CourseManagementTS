@@ -19,7 +19,7 @@ export class PeopleDao {
     return await this.peopleRepository
       .save<PersonEntity>(person)
       .catch((error) => {
-        this.logger.warn(
+        this.logger.log(
           `Could not save new person [error: '${error.message}']`,
         );
         throw new PersonAlreadyExistsError(
@@ -40,7 +40,7 @@ export class PeopleDao {
         return person;
       })
       .catch((error) => {
-        this.logger.warn(
+        this.logger.log(
           `Could not fetch person using id [error: '${error.message}']`,
         );
         throw error;
