@@ -8,7 +8,7 @@ export class CoursesService {
   constructor(private coursesDao: CoursesDao) {}
 
   addCourse(
-    teacherId: string | number,
+    teacherId: number,
     addCourseDto: AddCourseBaseDto,
   ): Promise<CourseEntity> {
     return this.coursesDao.save(addCourseDto.toCourseEntity(teacherId));

@@ -23,5 +23,5 @@ export abstract class AddCourseBaseDto {
     this.content = this.content.trim();
   }
 
-  abstract toCourseEntity(teacherId: string | number): CourseEntity;
+  abstract toCourseEntity(teacherId: number): CourseEntity;
 }

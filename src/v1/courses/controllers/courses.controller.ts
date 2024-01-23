@@ -35,7 +35,7 @@ export class CoursesController {
     @Body() addCourseDto: AddCourseDto,
   ): Promise<CourseEntity> {
     return this.coursesService
-      .addCourse(personId, addCourseDto)
+      .addCourse(Number(personId), addCourseDto)
       .catch((error: BaseError) => {
         throw handleError(error);
       });
@@ -47,14 +47,8 @@ export class CoursesController {
   getAllOwnCourses(
     @Headers(headerWithPersonId) personId: string,
   ): Promise<CourseEntity[]> {
-    let tId: number;
-    if (typeof personId == 'string') {
-      tId = Number(personId);
-    } else {
-      tId = personId;
-    }
     return this.coursesService
-      .getAllOwnCourses(tId)
+      .getAllOwnCourses(Number(personId))
       .catch((error: BaseError) => {
         throw handleError(error);
       });

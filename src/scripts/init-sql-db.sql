@@ -18,6 +18,14 @@ CREATE TABLE Class (
     name varchar(30) NOT NULL UNIQUE
 )
 
+CREATE TABLE ClassMembership (
+    person_id int NOT NULL,
+    class_name varchar(30) NOT NULL,
+    PRIMARY KEY (person_id, class_name),
+    FOREIGN KEY (person_id) REFERENCES Person(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (class_name) REFERENCES Class(name) ON DELETE CASCADE ON UPDATE CASCADE
+)
+
 ALTER TABLE Course
 ADD CONSTRAINT 'fk_group_name'
 FOREIGN KEY ('student_class')

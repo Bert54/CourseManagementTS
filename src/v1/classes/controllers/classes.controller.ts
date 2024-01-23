@@ -17,8 +17,9 @@ import {
 import { CLASS_CREATE, CLASS_DELETE } from '../../../common';
 import { ClassEntity } from '../entities';
 import { AddClassDto } from '../dto';
+import { baseRoute } from '../constants';
 
-@Controller('/classes')
+@Controller(baseRoute)
 export class ClassesController {
   constructor(private classesService: ClassesService) {}
 
