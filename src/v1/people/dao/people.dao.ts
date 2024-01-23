@@ -61,7 +61,7 @@ export class PeopleDao {
         return person;
       })
       .catch((error) => {
-        this.logger.warn(
+        this.logger.log(
           `Could not fetch person using name [error: '${error.message}']`,
         );
         throw error;

@@ -4,6 +4,7 @@ import { IsNotEmpty, IsString, Length } from 'class-validator';
 export abstract class AddCourseBaseDto {
   @IsNotEmpty()
   @IsString()
+  @Length(1, 30)
   student_class: string;
 
   @IsNotEmpty()
