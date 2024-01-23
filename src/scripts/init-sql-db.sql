@@ -14,7 +14,8 @@ CREATE TABLE Course (
 )
 
 CREATE TABLE Class (
-    name varchar(30) PRIMARY KEY
+    id serial PRIMARY KEY,
+    name varchar(30) NOT NULL UNIQUE
 )
 
 ALTER TABLE Course

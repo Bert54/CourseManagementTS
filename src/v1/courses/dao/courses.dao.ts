@@ -19,7 +19,7 @@ export class CoursesDao {
     return await this.coursesRepository
       .save<CourseEntity>(course)
       .catch((error) => {
-        this.logger.warn(
+        this.logger.log(
           `Could not save new course [error: '${error.message}']`,
         );
         throw error;
