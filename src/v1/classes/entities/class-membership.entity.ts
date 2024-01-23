@@ -1,4 +1,10 @@
-import { Entity, JoinColumn, OneToOne, PrimaryColumn } from 'typeorm';
+import {
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToOne,
+  PrimaryColumn,
+} from 'typeorm';
 import { PersonEntity } from '../../people';
 import { ClassEntity } from './class.entity';
 
@@ -13,6 +19,10 @@ export class ClassMembershipEntity {
   @OneToOne(() => ClassEntity)
   @JoinColumn({ name: 'class_name' })
   class_name: string;
+
+  @ManyToOne(() => ClassEntity, (cls) => cls.members)
+  @JoinColumn({ name: 'class_name', referencedColumnName: 'name' })
+  class_info: ClassEntity;
 
   constructor(person_id: number, class_name: string) {
     this.person_id = person_id;

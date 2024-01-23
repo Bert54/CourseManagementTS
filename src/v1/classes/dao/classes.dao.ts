@@ -1,12 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { BeforeRemove, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 
 import { ClassEntity } from '../entities';
 import { LoggerService } from '../../../common';
 import { ClassAlreadyExistsError, ClassNotFoundError } from '../errors';
-import { PersonEntity } from '../../people';
 
 @Injectable()
 export class ClassesDao {
@@ -29,8 +28,11 @@ export class ClassesDao {
 
   async findOneByName(name: string): Promise<ClassEntity> {
     return await this.classesRepository
-      .findOneBy({
-        name: name,
+      .findOne({
+        where: {
+          name: name,
+        },
+        relations: ['members'],
       })
       .then((person: ClassEntity) => {
         if (!person) {

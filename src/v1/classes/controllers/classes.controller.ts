@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Delete,
+  Get,
   Param,
   Post,
   UseGuards,
@@ -22,6 +23,13 @@ import { baseRoute } from '../constants';
 @Controller(baseRoute)
 export class ClassesController {
   constructor(private classesService: ClassesService) {}
+
+  @Get('/name/:name')
+  getClass(@Param('name') className: string): Promise<ClassEntity> {
+    return this.classesService.getClass(className).catch((error: BaseError) => {
+      throw handleError(error);
+    });
+  }
 
   @Post()
   @UseGuards(CheckPermissionGuard)

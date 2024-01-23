@@ -12,6 +12,10 @@ export class ClassesService {
     return this.classesDao.save(addClassDto.toClassEntity());
   }
 
+  getClass(className: string): Promise<ClassEntity> {
+    return this.classesDao.findOneByName(className);
+  }
+
   removeClass(name: string): Promise<ClassEntity> {
     return this.classesDao.deleteOneByName(name);
   }
