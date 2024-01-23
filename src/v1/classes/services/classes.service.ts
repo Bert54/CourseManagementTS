@@ -13,7 +13,15 @@ export class ClassesService {
   }
 
   getClass(className: string): Promise<ClassEntity> {
-    return this.classesDao.findOneByName(className);
+    return this.classesDao.findOneByName(className).then((cls) => {
+      // transfer people gotten from memberships directly into the class object
+      cls.members_cls.map((membership) => {
+        cls.members = cls.members || [];
+        cls.members.push(membership.person);
+      });
+      delete cls.members_cls;
+      return cls;
+    });
   }
 
   removeClass(name: string): Promise<ClassEntity> {

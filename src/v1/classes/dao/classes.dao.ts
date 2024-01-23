@@ -32,7 +32,7 @@ export class ClassesDao {
         where: {
           name: name,
         },
-        relations: ['members'],
+        relations: ['members_cls', 'members_cls.person'],
       })
       .then((person: ClassEntity) => {
         if (!person) {

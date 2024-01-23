@@ -6,6 +6,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { ClassMembershipEntity } from './class-membership.entity';
+import { PersonEntity } from '../../people';
 
 @Entity('class')
 export class ClassEntity {
@@ -17,7 +18,9 @@ export class ClassEntity {
 
   @OneToMany(() => ClassMembershipEntity, (membership) => membership.class_info)
   @JoinColumn({ name: 'name', referencedColumnName: 'class_info' })
-  members: ClassMembershipEntity[];
+  members_cls: ClassMembershipEntity[];
+
+  members: PersonEntity[];
 
   constructor(name: string) {
     this.name = name;
