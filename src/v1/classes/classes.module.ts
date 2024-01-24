@@ -15,5 +15,6 @@ import { ClassesDao, ClassesMembershipDao } from './dao';
     ClassesMembershipService,
     ClassesMembershipDao,
   ],
+  exports: [ClassesService, ClassesMembershipService],
 })
 export class ClassesModule {}

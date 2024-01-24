@@ -22,4 +22,8 @@ export class ClassesMembershipService {
   ): Promise<ClassMembershipEntity> {
     return this.classesMembershipDao.deleteOne(personId, className);
   }
+
+  checkMembership(personId: number, className: string): Promise<boolean> {
+    return this.classesMembershipDao.exists(personId, className);
+  }
 }
