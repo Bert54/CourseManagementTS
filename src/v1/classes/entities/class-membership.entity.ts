@@ -5,13 +5,9 @@ import { ClassEntity } from './class.entity';
 @Entity('classmembership')
 export class ClassMembershipEntity {
   @PrimaryColumn('person_id')
-  @OneToOne(() => PersonEntity)
-  @JoinColumn({ name: 'person_id' })
   person_id: number;
 
   @PrimaryColumn('class_name')
-  @OneToOne(() => ClassEntity)
-  @JoinColumn({ name: 'class_name' })
   class_name: string;
 
   @OneToOne(() => ClassEntity)

@@ -27,6 +27,8 @@ CREATE TABLE ClassMembership (
 )
 
 ALTER TABLE Course
-ADD CONSTRAINT 'fk_group_name'
-FOREIGN KEY ('student_class')
-REFERENCES 'Class' ('name');
+ADD CONSTRAINT fk_student_class
+FOREIGN KEY (student_class)
+REFERENCES Class (name)
+ON DELETE NO ACTION
+ON UPDATE CASCADE;

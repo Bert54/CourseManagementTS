@@ -1,4 +1,10 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 import { PersonEntity } from '../../people';
 
@@ -7,9 +13,7 @@ export class CourseEntity {
   @PrimaryGeneratedColumn('increment')
   id: number;
 
-  @ManyToOne(() => PersonEntity, (person) => person.id)
-  @JoinColumn({ name: 'teacher_id' })
-  @Column({ name: 'teacher_id' })
+  @Column()
   teacher_id: number;
 
   @Column()
