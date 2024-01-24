@@ -1,14 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { createMock, DeepMocked } from '@golevelup/ts-jest';
-import { HttpException, HttpStatus } from '@nestjs/common';
 
 import { PeopleController } from './people.controller';
 import { PeopleService } from '../services';
 import { PersonEntity } from '../entities';
-import { ErrorHandlerInterceptor, NotFoundError } from '../../common';
+import { CheckPermissionService, NotFoundError } from '../../common';
 import { AddPersonDtoBase } from '../dto';
 import { PersonAlreadyExistsError } from '../errors';
-import { APP_INTERCEPTOR } from '@nestjs/core';
 
 describe('PeopleController', () => {
   let peopleController: PeopleController;
@@ -23,8 +21,8 @@ describe('PeopleController', () => {
           useValue: createMock<PeopleService>(),
         },
         {
-          provide: APP_INTERCEPTOR,
-          useClass: ErrorHandlerInterceptor,
+          provide: CheckPermissionService,
+          useValue: createMock<CheckPermissionService>(),
         },
       ],
     }).compile();

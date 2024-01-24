@@ -1,14 +1,17 @@
-import { Body, Controller, Headers, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Headers,
+  Param,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 
 import { baseRoute } from '../constants';
 import { ClassMembershipEntity } from '../entities';
 import { ClassesMembershipService } from '../services';
-import {
-  BaseError,
-  CheckPermission,
-  CheckPermissionGuard,
-  handleError,
-} from '../../common';
+import { CheckPermission, CheckPermissionGuard } from '../../common';
 import { CLASS_JOIN, headerWithPersonId } from '../../../common';
 import { AddMembershipDto } from '../dto';
 
@@ -26,6 +29,19 @@ export class ClassesMembershipController {
     return this.classesMembershipService.joinClass(
       Number(personId),
       addMembershipDto,
+    );
+  }
+
+  @Delete('/name/:name')
+  @UseGuards(CheckPermissionGuard)
+  @CheckPermission(CLASS_JOIN)
+  leaveClass(
+    @Headers(headerWithPersonId) personId: string,
+    @Param('name') className: string,
+  ): Promise<ClassMembershipEntity> {
+    return this.classesMembershipService.leaveClass(
+      Number(personId),
+      className,
     );
   }
 }

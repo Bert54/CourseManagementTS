@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 
 import { catchError, Observable, throwError } from 'rxjs';
+
 import { handleError } from '../errors';
 
 @Injectable()

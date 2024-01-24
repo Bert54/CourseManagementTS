@@ -15,4 +15,11 @@ export class ClassesMembershipService {
       addMembershipDto.toClassMembershipEntity(personId),
     );
   }
+
+  leaveClass(
+    personId: number,
+    className: string,
+  ): Promise<ClassMembershipEntity> {
+    return this.classesMembershipDao.deleteOne(personId, className);
+  }
 }

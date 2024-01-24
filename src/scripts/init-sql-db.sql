@@ -10,7 +10,7 @@ CREATE TABLE Course (
     student_class varchar(30),
     title varchar(200) NOT NULL,
     content text NOT NULL,
-    FOREIGN KEY (teacher_id) REFERENCES Person(id)
+    FOREIGN KEY (teacher_id) REFERENCES Person(id) ON DELETE NO ACTION ON UPDATE CASCADE
 )
 
 CREATE TABLE Class (
@@ -30,5 +30,5 @@ ALTER TABLE Course
 ADD CONSTRAINT fk_student_class
 FOREIGN KEY (student_class)
 REFERENCES Class (name)
-ON DELETE NO ACTION
+ON DELETE SET NULL
 ON UPDATE CASCADE;

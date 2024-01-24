@@ -1,16 +1,18 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 
 import { PeopleService } from '../services';
 import { AddPersonDto } from '../dto';
 import { PersonEntity } from '../entities';
-import { BaseError, handleError } from '../../common';
-import { NumericIdValidator } from '../../../common';
+import { CheckPermission, CheckPermissionGuard } from '../../common';
+import { NumericIdValidator, PERSON_CREATE } from '../../../common';
 
 @Controller('/people')
 export class PeopleController {
   constructor(private readonly peopleService: PeopleService) {}
 
   @Post()
+  @UseGuards(CheckPermissionGuard)
+  @CheckPermission(PERSON_CREATE)
   addPerson(@Body() addPersonDto: AddPersonDto): Promise<PersonEntity> {
     return this.peopleService.addPerson(addPersonDto);
   }

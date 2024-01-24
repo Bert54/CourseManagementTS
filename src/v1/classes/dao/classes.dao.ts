@@ -51,8 +51,8 @@ export class ClassesDao {
   }
 
   async deleteOneByName(name: string): Promise<ClassEntity> {
-    const findPromise = Promise.resolve(this.findOneByName(name));
-    const deletePromise = Promise.resolve(
+    const findPromise = await Promise.resolve(this.findOneByName(name));
+    const deletePromise = await Promise.resolve(
       this.classesRepository
         .delete({
           name: name,
@@ -73,13 +73,7 @@ export class ClassesDao {
         }),
     );
     return await Promise.all([findPromise, deletePromise]).then((values) => {
-      let classEntity: ClassEntity;
-      values.forEach((currentValue) => {
-        if (!!currentValue) {
-          classEntity = currentValue;
-        }
-      });
-      return classEntity;
+      return values[0];
     });
   }
 }
