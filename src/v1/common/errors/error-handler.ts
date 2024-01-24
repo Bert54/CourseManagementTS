@@ -1,6 +1,12 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
 
-import { BadRequestError, BaseError, ForbiddenError, NotFoundError, UnauthorizedError } from './types';
+import {
+  BadRequestError,
+  BaseError,
+  ForbiddenError,
+  NotFoundError,
+  UnauthorizedError,
+} from './types';
 
 export const genericErrorMessage: string =
   'Something went wrong while processing the request';
