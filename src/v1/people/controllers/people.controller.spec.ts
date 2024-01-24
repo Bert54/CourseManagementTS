@@ -5,9 +5,10 @@ import { HttpException, HttpStatus } from '@nestjs/common';
 import { PeopleController } from './people.controller';
 import { PeopleService } from '../services';
 import { PersonEntity } from '../entities';
-import { NotFoundError } from '../../common';
+import { ErrorHandlerInterceptor, NotFoundError } from '../../common';
 import { AddPersonDtoBase } from '../dto';
 import { PersonAlreadyExistsError } from '../errors';
+import { APP_INTERCEPTOR } from '@nestjs/core';
 
 describe('PeopleController', () => {
   let peopleController: PeopleController;
@@ -20,6 +21,10 @@ describe('PeopleController', () => {
         {
           provide: PeopleService,
           useValue: createMock<PeopleService>(),
+        },
+        {
+          provide: APP_INTERCEPTOR,
+          useClass: ErrorHandlerInterceptor,
         },
       ],
     }).compile();
@@ -103,16 +108,13 @@ describe('PeopleController', () => {
         peopleController.getPersonById({
           id: 1,
         }),
-      ).rejects.toThrow(HttpException);
+      ).rejects.toThrow(NotFoundError);
 
       expect(
         peopleController.getPersonById({
           id: 1,
         }),
-      ).rejects.toHaveProperty('response', {
-        status: HttpStatus.NOT_FOUND,
-        error: 'not found',
-      });
+      ).rejects.toStrictEqual(new NotFoundError('not found'));
     });
   });
 
@@ -186,15 +188,11 @@ describe('PeopleController', () => {
       );
 
       expect(peopleController.getPersonByName('james')).rejects.toThrow(
-        HttpException,
+        NotFoundError,
       );
 
-      expect(peopleController.getPersonByName('james')).rejects.toHaveProperty(
-        'response',
-        {
-          status: HttpStatus.NOT_FOUND,
-          error: 'not found',
-        },
+      expect(peopleController.getPersonByName('james')).rejects.toStrictEqual(
+        new NotFoundError('not found'),
       );
     });
   });
@@ -228,14 +226,12 @@ describe('PeopleController', () => {
       const dto = createMock<AddPersonDtoBase>();
       dto.name = 'james';
 
-      expect(peopleController.addPerson(dto)).rejects.toThrow(HttpException);
+      expect(peopleController.addPerson(dto)).rejects.toThrow(
+        PersonAlreadyExistsError,
+      );
 
-      expect(peopleController.addPerson(dto)).rejects.toHaveProperty(
-        'response',
-        {
-          status: HttpStatus.BAD_REQUEST,
-          error: 'already exists',
-        },
+      expect(peopleController.addPerson(dto)).rejects.toStrictEqual(
+        new PersonAlreadyExistsError('already exists'),
       );
     });
   });

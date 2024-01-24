@@ -23,10 +23,9 @@ export class ClassesMembershipController {
     @Headers(headerWithPersonId) personId: string,
     @Body() addMembershipDto: AddMembershipDto,
   ): Promise<ClassMembershipEntity> {
-    return this.classesMembershipService
-      .joinClass(Number(personId), addMembershipDto)
-      .catch((error: BaseError) => {
-        throw handleError(error);
-      });
+    return this.classesMembershipService.joinClass(
+      Number(personId),
+      addMembershipDto,
+    );
   }
 }

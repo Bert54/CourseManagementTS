@@ -9,12 +9,7 @@ import {
 } from '@nestjs/common';
 
 import { CourseEntity } from '../entities';
-import {
-  BaseError,
-  CheckPermission,
-  CheckPermissionGuard,
-  handleError,
-} from '../../common';
+import { CheckPermission, CheckPermissionGuard } from '../../common';
 import {
   COURSE_CREATE,
   COURSE_FETCH,
@@ -34,11 +29,7 @@ export class CoursesController {
     @Headers(headerWithPersonId) personId: string,
     @Body() addCourseDto: AddCourseDto,
   ): Promise<CourseEntity> {
-    return this.coursesService
-      .addCourse(Number(personId), addCourseDto)
-      .catch((error: BaseError) => {
-        throw handleError(error);
-      });
+    return this.coursesService.addCourse(Number(personId), addCourseDto);
   }
 
   @Get()
@@ -47,11 +38,7 @@ export class CoursesController {
   getAllOwnCourses(
     @Headers(headerWithPersonId) personId: string,
   ): Promise<CourseEntity[]> {
-    return this.coursesService
-      .getAllOwnCourses(Number(personId))
-      .catch((error: BaseError) => {
-        throw handleError(error);
-      });
+    return this.coursesService.getAllOwnCourses(Number(personId));
   }
 
   @Get('/:id')
@@ -61,16 +48,6 @@ export class CoursesController {
     @Headers(headerWithPersonId) personId: string,
     @Param() id: NumericIdValidator,
   ): Promise<CourseEntity> {
-    let tId: number;
-    if (typeof personId == 'string') {
-      tId = Number(personId);
-    } else {
-      tId = personId;
-    }
-    return this.coursesService
-      .getOneOwnCourse(id.id, tId)
-      .catch((error: BaseError) => {
-        throw handleError(error);
-      });
+    return this.coursesService.getOneOwnCourse(id.id, Number(personId));
   }
 }
