@@ -12,14 +12,13 @@ export class ClassesService {
     return this.classesDao.save(addClassDto.toClassEntity());
   }
 
-  getClass(className: string): Promise<ClassEntity> {
-    return this.classesDao.findOneByName(className).then((cls) => {
+  async getClass(className: string): Promise<ClassEntity> {
+    return await this.classesDao.findOneByName(className).then((cls) => {
       // transfer people gotten from memberships directly into the class object
       cls.members = [];
-      cls.members_cls.forEach((membership) => {
-        cls.members.push(membership.person);
-      });
-      delete cls.members_cls;
+      cls.members_cls.forEach((membership) =>
+        cls.members.push(membership.person),
+      );
       return cls;
     });
   }

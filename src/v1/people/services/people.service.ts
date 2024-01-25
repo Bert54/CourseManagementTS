@@ -23,6 +23,13 @@ export class PeopleService {
   }
 
   getPerson(options: Partial<GetUserOptionsInterface>): Promise<PersonEntity> {
-    return this.peopleDao.findOne(options);
+    return this.peopleDao.findOne(options).then((person) => {
+      // transfer classes gotten from memberships directly into the person object
+      person.classes = [];
+      person.memberships.forEach((membership) =>
+        person.classes.push(membership.class_info),
+      );
+      return person;
+    });
   }
 }

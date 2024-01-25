@@ -7,6 +7,7 @@ import {
   Relation,
   TableInheritance,
 } from 'typeorm';
+import { Exclude } from 'class-transformer';
 
 import type {
   ClassEntity,
@@ -24,6 +25,7 @@ export abstract class PersonEntity {
 
   @OneToMany('ClassMembershipEntity', 'person')
   @JoinColumn({ name: 'id', referencedColumnName: 'person_id' })
+  @Exclude()
   memberships: Relation<ClassMembershipEntity[]>;
 
   classes: ClassEntity[];
