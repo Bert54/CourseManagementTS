@@ -6,6 +6,7 @@ import { Repository } from 'typeorm';
 import { PersonEntity } from '../entities';
 import { PersonAlreadyExistsError, PersonNotFoundError } from '../errors';
 import { LoggerService } from '../../../common';
+import { GetUserOptionsInterface } from '../interfaces';
 
 @Injectable()
 export class PeopleDao {
@@ -28,42 +29,22 @@ export class PeopleDao {
       });
   }
 
-  async findOneById(id: number): Promise<PersonEntity> {
+  async findOne(
+    conditions: Partial<GetUserOptionsInterface>,
+  ): Promise<PersonEntity> {
     return await this.peopleRepository
-      .findOneBy({
-        id: id,
+      .findOne({
+        where: conditions,
+        relations: ['memberships', 'memberships.class_info'],
       })
       .then((person: PersonEntity) => {
         if (!person) {
-          throw new PersonNotFoundError(`Person with id '${id}' was not found`);
+          throw new PersonNotFoundError(`Person was not found`);
         }
         return person;
       })
       .catch((error) => {
-        this.logger.log(
-          `Could not fetch person using id [error: '${error.message}']`,
-        );
-        throw error;
-      });
-  }
-
-  async findOneByName(name: string): Promise<PersonEntity> {
-    return await this.peopleRepository
-      .findOneBy({
-        name: name,
-      })
-      .then((person: PersonEntity) => {
-        if (!person) {
-          throw new PersonNotFoundError(
-            `Person with name '${name}' was not found`,
-          );
-        }
-        return person;
-      })
-      .catch((error) => {
-        this.logger.log(
-          `Could not fetch person using name [error: '${error.message}']`,
-        );
+        this.logger.log(`Could not fetch person [error: '${error.message}']`);
         throw error;
       });
   }

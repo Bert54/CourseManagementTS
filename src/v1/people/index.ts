@@ -6,3 +6,4 @@ export * from './services';
 export * from './constants';
 export * from './dao';
 export * from './errors';
+export * from './interfaces';

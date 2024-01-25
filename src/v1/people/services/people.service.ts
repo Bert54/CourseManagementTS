@@ -22,10 +22,14 @@ export class PeopleService {
   }
 
   getPersonById(id: number): Promise<PersonEntity> {
-    return this.peopleDao.findOneById(id);
+    return this.peopleDao.findOne({
+      id: id,
+    });
   }
 
   getPersonByName(name: string): Promise<PersonEntity> {
-    return this.peopleDao.findOneByName(name);
+    return this.peopleDao.findOne({
+      name: name,
+    });
   }
 }
