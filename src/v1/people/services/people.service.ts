@@ -22,8 +22,10 @@ export class PeopleService {
     return this.peopleDao.save(personEntity);
   }
 
-  getPerson(options: Partial<GetUserOptionsInterface>): Promise<PersonEntity> {
-    return this.peopleDao.findOne(options).then((person) => {
+  async getPerson(
+    options: Partial<GetUserOptionsInterface>,
+  ): Promise<PersonEntity> {
+    return await this.peopleDao.findOne(options).then((person) => {
       // transfer classes gotten from memberships directly into the person object
       person.classes = [];
       person.memberships.forEach((membership) =>
