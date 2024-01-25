@@ -9,11 +9,14 @@ import {
 } from '@nestjs/common';
 
 import { ClassesService } from '../services';
-import { CheckPermission, CheckPermissionGuard } from '../../common';
-import { CLASS_CREATE, CLASS_DELETE } from '../../../common';
 import { ClassEntity } from '../entities';
 import { AddClassDto } from '../dto';
 import { baseRoute } from '../constants';
+import {
+  CheckPermission,
+  CheckPermissionGuard,
+} from '../../common/modules/authorization';
+import { CLASS_CREATE, CLASS_DELETE } from '../../../common/constants';
 
 @Controller(baseRoute)
 export class ClassesController {

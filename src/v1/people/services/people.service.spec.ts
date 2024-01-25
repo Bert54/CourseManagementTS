@@ -4,9 +4,9 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { PeopleService } from './people.service';
 import { PeopleDao } from '../dao';
 import { PersonEntity } from '../entities';
-import { NotFoundError } from '../../common';
 import { AddPersonDtoBase } from '../dto';
 import { PersonAlreadyExistsError } from '../errors';
+import { NotFoundError } from '../../common/errors';
 
 describe('PeopleService', () => {
   let peopleService: PeopleService;
@@ -36,7 +36,7 @@ describe('PeopleService', () => {
       person.id = 1;
       person.name = 'james';
 
-      peopleDao.findOneById.mockReturnValue(
+      peopleDao.findOne.mockReturnValue(
         new Promise<PersonEntity>(() => person),
       );
 
@@ -54,18 +54,16 @@ describe('PeopleService', () => {
       person2.id = 2;
       person2.name = 'natalya';
 
-      peopleDao.findOneById.mockImplementation(
-        (id: number): Promise<PersonEntity> => {
-          let person: PersonEntity;
-          if (id === 1) {
-            person = person1;
-          }
-          if (id === 2) {
-            person = person2;
-          }
-          return new Promise(() => person);
-        },
-      );
+      peopleDao.findOne.mockImplementation((options): Promise<PersonEntity> => {
+        let person: PersonEntity;
+        if (options.id === 1) {
+          person = person1;
+        }
+        if (options.id === 2) {
+          person = person2;
+        }
+        return new Promise(() => person);
+      });
 
       let gottenPerson = peopleService.getPersonById(1);
 
@@ -77,7 +75,7 @@ describe('PeopleService', () => {
     });
 
     it('should throw an error', () => {
-      peopleDao.findOneById.mockImplementation((): Promise<PersonEntity> => {
+      peopleDao.findOne.mockImplementation((): Promise<PersonEntity> => {
         return Promise.reject(new NotFoundError('not found'));
       });
 
@@ -91,7 +89,7 @@ describe('PeopleService', () => {
       person.id = 1;
       person.name = 'james';
 
-      peopleDao.findOneByName.mockReturnValue(
+      peopleDao.findOne.mockReturnValue(
         new Promise<PersonEntity>(() => person),
       );
 
@@ -109,22 +107,20 @@ describe('PeopleService', () => {
       person2.id = 2;
       person2.name = 'natalya';
 
-      peopleDao.findOneByName.mockReturnValue(
+      peopleDao.findOne.mockReturnValue(
         new Promise<PersonEntity>(() => person1),
       );
 
-      peopleDao.findOneByName.mockImplementation(
-        (name: string): Promise<PersonEntity> => {
-          let person: PersonEntity;
-          if (name === 'james') {
-            person = person1;
-          }
-          if (name === 'natalya') {
-            person = person2;
-          }
-          return new Promise(() => person);
-        },
-      );
+      peopleDao.findOne.mockImplementation((options): Promise<PersonEntity> => {
+        let person: PersonEntity;
+        if (options.name === 'james') {
+          person = person1;
+        }
+        if (options.name === 'natalya') {
+          person = person2;
+        }
+        return new Promise(() => person);
+      });
 
       let gottenPerson = peopleService.getPersonByName('james');
 
@@ -136,7 +132,7 @@ describe('PeopleService', () => {
     });
 
     it('should throw an error', () => {
-      peopleDao.findOneByName.mockImplementation((): Promise<PersonEntity> => {
+      peopleDao.findOne.mockImplementation((): Promise<PersonEntity> => {
         return Promise.reject(new NotFoundError('not found'));
       });
 

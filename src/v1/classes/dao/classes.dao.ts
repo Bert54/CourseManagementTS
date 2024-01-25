@@ -4,8 +4,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { ClassEntity } from '../entities';
-import { LoggerService } from '../../../common';
 import { ClassAlreadyExistsError, ClassNotFoundError } from '../errors';
+import { LoggerService } from '../../../common/modules/logger';
 
 @Injectable()
 export class ClassesDao {

@@ -10,7 +10,7 @@ import {
   handleError,
   UnauthorizedError,
 } from '../../../errors';
-import { headerWithPersonId } from '../../../../../common';
+import { HEADER_WITH_PERSON_ID } from '../../../../../common/constants';
 
 @Injectable()
 export class CheckPermissionGuard implements CanActivate {
@@ -30,7 +30,7 @@ export class CheckPermissionGuard implements CanActivate {
       return true;
     }
     const personIdToCheckStr = context.switchToHttp().getRequest().headers[
-      headerWithPersonId
+      HEADER_WITH_PERSON_ID
     ];
     if (!personIdToCheckStr) {
       throw handleError(new UnauthorizedError('No person ID provided'));

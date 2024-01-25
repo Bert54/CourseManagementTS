@@ -1,9 +1,9 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 
-import { AppConfig, ConfigSingleton } from './config';
+import { AppConfig, ConfigSingleton as Config } from './config';
 import { AppModule } from './app.module';
-import { LoggerService } from './common';
+import { LoggerService } from './common/modules/logger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -18,7 +18,7 @@ async function bootstrap() {
     }),
   );
 
-  const config = ConfigSingleton.getInstance().getConfig<AppConfig>('server');
+  const config = Config.getInstance().getConfig<AppConfig>('server');
 
   await app.listen(config.port);
 }

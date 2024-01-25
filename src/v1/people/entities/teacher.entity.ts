@@ -7,7 +7,7 @@ import {
   CLASS_JOIN,
   COURSE_CREATE,
   COURSE_FETCH,
-} from '../../../common';
+} from '../../../common/constants';
 
 @ChildEntity(PERSON_ROLE_TEACHER)
 export class TeacherEntity extends PersonEntity {

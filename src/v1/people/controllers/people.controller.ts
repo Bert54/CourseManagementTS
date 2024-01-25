@@ -3,8 +3,12 @@ import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { PeopleService } from '../services';
 import { AddPersonDto } from '../dto';
 import { PersonEntity } from '../entities';
-import { CheckPermission, CheckPermissionGuard } from '../../common';
-import { NumericIdValidator, PERSON_CREATE } from '../../../common';
+import { PERSON_CREATE } from '../../../common/constants';
+import {
+  CheckPermission,
+  CheckPermissionGuard,
+} from '../../common/modules/authorization';
+import { NumericIdValidator } from '../../../common/validators';
 
 @Controller('/people')
 export class PeopleController {

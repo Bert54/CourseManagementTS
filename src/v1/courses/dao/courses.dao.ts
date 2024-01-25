@@ -3,10 +3,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 import { QueryFailedError, Repository } from 'typeorm';
 
-import { LoggerService } from '../../../common';
 import { CourseEntity } from '../entities';
 import { CourseNotFoundError } from '../errors';
-import { BadRequestError } from '../../common';
+import { BadRequestError } from '../../common/errors';
+import { LoggerService } from '../../../common/modules/logger';
 
 @Injectable()
 export class CoursesDao {

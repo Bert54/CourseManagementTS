@@ -4,9 +4,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { PersonEntity } from '../entities';
-import { PersonAlreadyExistsError, PersonNotFoundError } from '../errors';
-import { LoggerService } from '../../../common';
 import { GetUserOptionsInterface } from '../interfaces';
+import { LoggerService } from '../../../common/modules/logger';
+import { PersonAlreadyExistsError, PersonNotFoundError } from '../errors';
 
 @Injectable()
 export class PeopleDao {

@@ -4,8 +4,9 @@ import { APP_INTERCEPTOR, RouterModule } from '@nestjs/core';
 import { PeopleModule } from './people';
 import { RouteMapping } from './routes';
 import { CoursesModule } from './courses';
-import { AuthorizationModule, ErrorHandlerInterceptor } from './common';
 import { ClassesModule } from './classes';
+import { AuthorizationModule } from './common/modules/authorization';
+import { ErrorHandlerInterceptor } from './common/interceptors';
 
 @Module({
   imports: [

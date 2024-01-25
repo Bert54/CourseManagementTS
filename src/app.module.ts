@@ -2,17 +2,19 @@ import { ClassSerializerInterceptor, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 
-import { LoggerModule } from './common';
-import { ConfigSingleton, setupSqlDatabase, SqlDatabaseConfig } from './config';
+import {
+  ConfigSingleton as Config,
+  setupSqlDatabase,
+  SqlDatabaseConfig,
+} from './config';
 import { V1Module } from './v1/v1.module';
+import { LoggerModule } from './common/modules/logger';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(
       setupSqlDatabase(
-        ConfigSingleton.getInstance().getConfig<SqlDatabaseConfig>(
-          'sql-database',
-        ),
+        Config.getInstance().getConfig<SqlDatabaseConfig>('sql-database'),
       ),
     ),
     LoggerModule,

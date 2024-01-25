@@ -1,4 +1,4 @@
-import { BadRequestError } from '../../common';
+import { BadRequestError } from '../../common/errors';
 
 export class UnknownRoleError extends BadRequestError {
   constructor(message: string) {

@@ -11,9 +11,12 @@ import {
 import { baseRoute } from '../constants';
 import { ClassMembershipEntity } from '../entities';
 import { ClassesMembershipService } from '../services';
-import { CheckPermission, CheckPermissionGuard } from '../../common';
-import { CLASS_JOIN, headerWithPersonId } from '../../../common';
 import { AddMembershipDto } from '../dto';
+import {
+  CheckPermission,
+  CheckPermissionGuard,
+} from '../../common/modules/authorization';
+import { CLASS_JOIN, HEADER_WITH_PERSON_ID } from '../../../common/constants';
 
 @Controller(baseRoute + '/membership')
 export class ClassesMembershipController {
@@ -23,7 +26,7 @@ export class ClassesMembershipController {
   @UseGuards(CheckPermissionGuard)
   @CheckPermission(CLASS_JOIN)
   joinClass(
-    @Headers(headerWithPersonId) personId: string,
+    @Headers(HEADER_WITH_PERSON_ID) personId: string,
     @Body() addMembershipDto: AddMembershipDto,
   ): Promise<ClassMembershipEntity> {
     return this.classesMembershipService.joinClass(
@@ -36,7 +39,7 @@ export class ClassesMembershipController {
   @UseGuards(CheckPermissionGuard)
   @CheckPermission(CLASS_JOIN)
   leaveClass(
-    @Headers(headerWithPersonId) personId: string,
+    @Headers(HEADER_WITH_PERSON_ID) personId: string,
     @Param('name') className: string,
   ): Promise<ClassMembershipEntity> {
     return this.classesMembershipService.leaveClass(

@@ -9,15 +9,18 @@ import {
 } from '@nestjs/common';
 
 import { CourseEntity } from '../entities';
-import { CheckPermission, CheckPermissionGuard } from '../../common';
+import { AddCourseDto } from '../dto';
+import { CoursesService } from '../services';
+import {
+  CheckPermission,
+  CheckPermissionGuard,
+} from '../../common/modules/authorization';
 import {
   COURSE_CREATE,
   COURSE_FETCH,
-  headerWithPersonId,
-  NumericIdValidator,
-} from '../../../common';
-import { AddCourseDto } from '../dto';
-import { CoursesService } from '../services';
+  HEADER_WITH_PERSON_ID,
+} from '../../../common/constants';
+import { NumericIdValidator } from '../../../common/validators';
 
 @Controller('/courses')
 export class CoursesController {
@@ -26,7 +29,7 @@ export class CoursesController {
   @UseGuards(CheckPermissionGuard)
   @CheckPermission(COURSE_CREATE)
   addCourse(
-    @Headers(headerWithPersonId) personId: string,
+    @Headers(HEADER_WITH_PERSON_ID) personId: string,
     @Body() addCourseDto: AddCourseDto,
   ): Promise<CourseEntity> {
     return this.coursesService.addCourse(Number(personId), addCourseDto);
@@ -36,7 +39,7 @@ export class CoursesController {
   @UseGuards(CheckPermissionGuard)
   @CheckPermission(COURSE_FETCH)
   getAllOwnCourses(
-    @Headers(headerWithPersonId) personId: string,
+    @Headers(HEADER_WITH_PERSON_ID) personId: string,
   ): Promise<CourseEntity[]> {
     return this.coursesService.getAllOwnCourses(Number(personId));
   }
@@ -45,7 +48,7 @@ export class CoursesController {
   @UseGuards(CheckPermissionGuard)
   @CheckPermission(COURSE_FETCH)
   getOneCourse(
-    @Headers(headerWithPersonId) personId: string,
+    @Headers(HEADER_WITH_PERSON_ID) personId: string,
     @Param() id: NumericIdValidator,
   ): Promise<CourseEntity> {
     return this.coursesService.getOneOwnCourse(id.id, Number(personId));

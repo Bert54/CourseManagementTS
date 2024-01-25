@@ -4,11 +4,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { ClassMembershipEntity } from '../entities';
-import { LoggerService } from '../../../common';
 import {
   MembershipAlreadyExistsError,
   MembershipNotFoundError,
 } from '../errors';
+import { LoggerService } from '../../../common/modules/logger';
 
 @Injectable()
 export class ClassesMembershipDao {

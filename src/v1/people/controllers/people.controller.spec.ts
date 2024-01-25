@@ -4,9 +4,10 @@ import { createMock, DeepMocked } from '@golevelup/ts-jest';
 import { PeopleController } from './people.controller';
 import { PeopleService } from '../services';
 import { PersonEntity } from '../entities';
-import { CheckPermissionService, NotFoundError } from '../../common';
 import { AddPersonDtoBase } from '../dto';
 import { PersonAlreadyExistsError } from '../errors';
+import { CheckPermissionService } from '../../common/modules/authorization';
+import { NotFoundError } from '../../common/errors';
 
 describe('PeopleController', () => {
   let peopleController: PeopleController;
