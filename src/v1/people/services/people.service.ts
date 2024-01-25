@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { AddPersonDtoBase } from '../dto';
 import { PersonEntity } from '../entities';
 import { PeopleDao } from '../dao';
+import { GetUserOptionsInterface } from '../interfaces';
 
 @Injectable()
 export class PeopleService {
@@ -21,15 +22,7 @@ export class PeopleService {
     return this.peopleDao.save(personEntity);
   }
 
-  getPersonById(id: number): Promise<PersonEntity> {
-    return this.peopleDao.findOne({
-      id: id,
-    });
-  }
-
-  getPersonByName(name: string): Promise<PersonEntity> {
-    return this.peopleDao.findOne({
-      name: name,
-    });
+  getPerson(options: Partial<GetUserOptionsInterface>): Promise<PersonEntity> {
+    return this.peopleDao.findOne(options);
   }
 }

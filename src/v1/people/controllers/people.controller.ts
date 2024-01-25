@@ -23,11 +23,15 @@ export class PeopleController {
 
   @Get('/:id')
   getPersonById(@Param() id: NumericIdValidator): Promise<PersonEntity> {
-    return this.peopleService.getPersonById(id.id);
+    return this.peopleService.getPerson({
+      id: id.id,
+    });
   }
 
   @Get('/name/:name')
   getPersonByName(@Param('name') name: string): Promise<PersonEntity> {
-    return this.peopleService.getPersonByName(name);
+    return this.peopleService.getPerson({
+      name: name,
+    });
   }
 }

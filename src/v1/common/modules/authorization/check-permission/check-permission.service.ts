@@ -11,13 +11,17 @@ export class CheckPermissionService {
   ) {}
 
   hasPermission(personId: number, permission: string): Promise<boolean> {
-    return this.peopleService.getPersonById(personId).then((person) => {
-      if (!person.getPermissions().includes(permission)) {
-        throw new ForbiddenError(
-          `Person is not allowed to perform this action`,
-        );
-      }
-      return true;
-    });
+    return this.peopleService
+      .getPerson({
+        id: personId,
+      })
+      .then((person) => {
+        if (!person.getPermissions().includes(permission)) {
+          throw new ForbiddenError(
+            `Person is not allowed to perform this action`,
+          );
+        }
+        return true;
+      });
   }
 }

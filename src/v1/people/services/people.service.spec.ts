@@ -40,7 +40,9 @@ describe('PeopleService', () => {
         new Promise<PersonEntity>(() => person),
       );
 
-      const gottenPerson = peopleService.getPersonById(1);
+      const gottenPerson = peopleService.getPerson({
+        id: 1,
+      });
 
       expect(gottenPerson).resolves.toBe(person);
     });
@@ -65,11 +67,15 @@ describe('PeopleService', () => {
         return new Promise(() => person);
       });
 
-      let gottenPerson = peopleService.getPersonById(1);
+      let gottenPerson = peopleService.getPerson({
+        id: 1,
+      });
 
       expect(gottenPerson).resolves.toBe(person1);
 
-      gottenPerson = peopleService.getPersonById(2);
+      gottenPerson = peopleService.getPerson({
+        id: 2,
+      });
 
       expect(gottenPerson).resolves.toBe(person2);
     });
@@ -79,7 +85,11 @@ describe('PeopleService', () => {
         return Promise.reject(new NotFoundError('not found'));
       });
 
-      expect(peopleService.getPersonById(1)).rejects.toThrow(NotFoundError);
+      expect(
+        peopleService.getPerson({
+          id: 1,
+        }),
+      ).rejects.toThrow(NotFoundError);
     });
   });
 
@@ -93,7 +103,9 @@ describe('PeopleService', () => {
         new Promise<PersonEntity>(() => person),
       );
 
-      const gottenPerson = peopleService.getPersonByName('james');
+      const gottenPerson = peopleService.getPerson({
+        name: 'james',
+      });
 
       expect(gottenPerson).resolves.toBe(person);
     });
@@ -122,11 +134,15 @@ describe('PeopleService', () => {
         return new Promise(() => person);
       });
 
-      let gottenPerson = peopleService.getPersonByName('james');
+      let gottenPerson = peopleService.getPerson({
+        name: 'james',
+      });
 
       expect(gottenPerson).resolves.toBe(person1);
 
-      gottenPerson = peopleService.getPersonByName('natalya');
+      gottenPerson = peopleService.getPerson({
+        name: 'natalya',
+      });
 
       expect(gottenPerson).resolves.toBe(person2);
     });
@@ -136,9 +152,11 @@ describe('PeopleService', () => {
         return Promise.reject(new NotFoundError('not found'));
       });
 
-      expect(peopleService.getPersonByName('james')).rejects.toThrow(
-        NotFoundError,
-      );
+      expect(
+        peopleService.getPerson({
+          name: 'james',
+        }),
+      ).rejects.toThrow(NotFoundError);
     });
   });
 
