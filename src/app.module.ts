@@ -2,9 +2,9 @@ import { ClassSerializerInterceptor, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 
-import { V1Module } from './v1';
 import { LoggerModule } from './common';
 import { ConfigSingleton, setupSqlDatabase, SqlDatabaseConfig } from './config';
+import { V1Module } from './v1/v1.module';
 
 @Module({
   imports: [

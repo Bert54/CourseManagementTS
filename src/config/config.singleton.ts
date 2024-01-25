@@ -1,6 +1,6 @@
 import process from 'process';
 import * as yaml from 'js-yaml';
-import fs from 'fs';
+import * as fs from 'fs';
 
 const defaultPath = 'config/default.yml';
 

@@ -1,10 +1,17 @@
 import {
   Column,
-  Entity, JoinColumn, OneToMany,
+  Entity,
+  JoinColumn,
+  OneToMany,
   PrimaryGeneratedColumn,
+  Relation,
   TableInheritance,
 } from 'typeorm';
-import { ClassEntity, ClassMembershipEntity } from '../../classes/entities';
+
+import type {
+  ClassEntity,
+  ClassMembershipEntity,
+} from '../../classes/entities';
 
 @Entity('person')
 @TableInheritance({ column: { type: 'varchar', name: 'role' } })
@@ -15,9 +22,9 @@ export abstract class PersonEntity {
   @Column()
   name: string;
 
-  @OneToMany(() => ClassMembershipEntity, (membership) => membership.person)
+  @OneToMany('ClassMembershipEntity', 'person')
   @JoinColumn({ name: 'id', referencedColumnName: 'person_id' })
-  memberships: ClassMembershipEntity[];
+  memberships: Relation<ClassMembershipEntity[]>;
 
   classes: ClassEntity[];
 
