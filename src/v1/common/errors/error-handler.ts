@@ -16,6 +16,11 @@ export const handleError = (error: BaseError): HttpException => {
     // no error => log here the inappropriate use of this function
   }
 
+  // HttpException => don't do anything and just return the error as is
+  if (error instanceof HttpException) {
+    return error;
+  }
+
   // BadRequestError => return a 400
   if (error instanceof BadRequestError) {
     return new HttpException(
