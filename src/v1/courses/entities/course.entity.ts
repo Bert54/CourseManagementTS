@@ -1,4 +1,12 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+
+import { ClassEntity } from '../../classes/entities';
 
 @Entity('course')
 export class CourseEntity {
@@ -16,6 +24,10 @@ export class CourseEntity {
 
   @Column()
   content: string;
+
+  @ManyToOne(() => ClassEntity, (cls) => cls.courses)
+  @JoinColumn({ name: 'student_class', referencedColumnName: 'name' })
+  cls: ClassEntity;
 
   constructor(
     teacher_id: number,

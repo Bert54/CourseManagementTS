@@ -8,6 +8,7 @@ import {
 import { ClassMembershipEntity } from './class-membership.entity';
 import { PersonEntity } from '../../people';
 import { Exclude } from 'class-transformer';
+import { CourseEntity } from '../../courses';
 
 @Entity('class')
 export class ClassEntity {
@@ -23,6 +24,11 @@ export class ClassEntity {
   members_cls: ClassMembershipEntity[];
 
   members: PersonEntity[];
+
+  @OneToMany(() => CourseEntity, (course) => course.cls)
+  @JoinColumn({ name: 'name', referencedColumnName: 'student_class' })
+  @Exclude()
+  courses: CourseEntity[];
 
   constructor(name: string) {
     this.name = name;

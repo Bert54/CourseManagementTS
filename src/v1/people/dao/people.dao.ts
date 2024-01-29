@@ -35,7 +35,11 @@ export class PeopleDao {
     return await this.peopleRepository
       .findOne({
         where: conditions,
-        relations: ['memberships', 'memberships.class_info'],
+        relations: [
+          'memberships',
+          'memberships.class_info',
+          'memberships.class_info.courses',
+        ],
       })
       .then((person: PersonEntity) => {
         if (!person) {

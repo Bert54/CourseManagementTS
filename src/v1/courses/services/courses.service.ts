@@ -1,9 +1,11 @@
 import { Injectable } from '@nestjs/common';
+
 import { CoursesDao } from '../dao';
 import { AddCourseBaseDto } from '../dto';
 import { CourseEntity } from '../entities';
 import { ClassesMembershipService, ClassesService } from '../../classes';
 import { CourseCreationForbiddenError } from '../errors';
+import { PeopleService } from '../../people';
 
 @Injectable()
 export class CoursesService {
@@ -11,6 +13,7 @@ export class CoursesService {
     private coursesDao: CoursesDao,
     private classesMembership: ClassesService,
     private classesMembershipService: ClassesMembershipService,
+    private peopleService: PeopleService,
   ) {}
 
   async addCourse(
@@ -54,5 +57,19 @@ export class CoursesService {
 
   getOneOwnCourse(courseId: number, teacherId: number): Promise<CourseEntity> {
     return this.coursesDao.findOne(courseId, teacherId);
+  }
+
+  getAllCoursesFromOwnClass(personId: number): Promise<CourseEntity[]> {
+    return this.peopleService
+      .getPerson({
+        id: personId,
+      })
+      .then((person) => {
+        const courses: CourseEntity[] = [];
+        person.memberships.forEach((membership) => {
+          courses.push(...membership.class_info.courses);
+        });
+        return courses;
+      });
   }
 }

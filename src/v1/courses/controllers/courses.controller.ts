@@ -16,6 +16,7 @@ import {
   CheckPermissionGuard,
 } from '../../common/modules/authorization';
 import {
+  CLASS_COURSE_FETCH,
   COURSE_CREATE,
   COURSE_FETCH,
   HEADER_WITH_PERSON_ID,
@@ -52,5 +53,14 @@ export class CoursesController {
     @Param() id: NumericIdValidator,
   ): Promise<CourseEntity> {
     return this.coursesService.getOneOwnCourse(id.id, Number(personId));
+  }
+
+  @Get('/own/classes')
+  @UseGuards(CheckPermissionGuard)
+  @CheckPermission(CLASS_COURSE_FETCH)
+  getAllCoursesFromOwnClass(
+    @Headers(HEADER_WITH_PERSON_ID) personId: string,
+  ): Promise<CourseEntity[]> {
+    return this.coursesService.getAllCoursesFromOwnClass(Number(personId));
   }
 }
