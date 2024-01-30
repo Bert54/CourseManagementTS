@@ -47,7 +47,12 @@ jobs:
       - run:
           name: Run tests
           command: npm run test:cov --ci --runInBand --reporters=default --reporters=jest-junit
-      - codecov/upload
+      - run:
+          command: curl -Os https://uploader.codecov.io/latest/linux/codecov
+      - run:
+          command: chmod +x codecov
+      - run:
+          command: ./codecov
   build-node:
     # Build node project
     executor: node/default
