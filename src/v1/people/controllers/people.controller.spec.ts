@@ -8,12 +8,13 @@ import { AddPersonDtoBase } from '../dto';
 import { PersonAlreadyExistsError } from '../errors';
 import { CheckPermissionService } from '../../common/modules/authorization';
 import { NotFoundError } from '../../common/errors';
+import { GetUserOptionsInterface } from '../interfaces';
 
 const getPersonMockImplementation = (
   person1: PersonEntity,
   person2: PersonEntity,
 ) => {
-  return (options): Promise<PersonEntity> => {
+  return (options: Partial<GetUserOptionsInterface>): Promise<PersonEntity> => {
     let person: PersonEntity;
     if (options.id === 1) {
       person = person1;

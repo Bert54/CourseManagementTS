@@ -1,3 +1,6 @@
+import { createMock } from '@golevelup/ts-jest';
+import { ArgumentMetadata, BadRequestException, ValidationPipe } from '@nestjs/common';
+
 import { AddPersonDto } from './add-person.dto';
 import {
   AdministratorEntity,
@@ -6,6 +9,7 @@ import {
   TeacherEntity,
 } from '../entities';
 import { UnknownRoleError } from '../errors';
+import { AddPersonDtoBase } from './add-person-base.dto';
 
 describe('AddPersonDto', () => {
   // ------------------------------------
@@ -80,6 +84,7 @@ describe('AddPersonDto', () => {
       expect(actual).toEqual(expected);
     });
   });
+
   // ------------------------------------
   // Test suite for toPersonEntity
   // ------------------------------------
@@ -134,6 +139,106 @@ describe('AddPersonDto', () => {
         dto.toPersonEntity();
       };
       expect(ref).toThrow(UnknownRoleError);
+    });
+  });
+
+  // ------------------------------------
+  // Test suite for Dto Validation
+  // ------------------------------------
+  describe('Dto validation', () => {
+    let validator: ValidationPipe;
+    let metadata: ArgumentMetadata;
+
+    beforeEach(async () => {
+      validator = new ValidationPipe({
+        transform: true,
+        whitelist: true,
+        forbidNonWhitelisted: true,
+      });
+      metadata = {
+        type: 'body',
+        metatype: AddPersonDto,
+        data: '',
+      };
+    });
+
+    it('Should be OK', () => {
+      const dto = createMock<AddPersonDtoBase>();
+      dto.name = 'james';
+      dto.role = 'administrator';
+
+      const transformResult: Promise<AddPersonDtoBase> = validator.transform(
+        dto,
+        metadata,
+      );
+
+      expect(transformResult).resolves.not.toThrow();
+    });
+
+    it('Should be OK in spite of bad role specified', () => {
+      const dto = createMock<AddPersonDtoBase>();
+      dto.name = 'jaws';
+      dto.role = 'bounty hunter';
+
+      const transformResult: Promise<AddPersonDtoBase> = validator.transform(
+        dto,
+        metadata,
+      );
+
+      expect(transformResult).resolves.not.toThrow();
+    });
+
+    it('Should throw due to empty name', () => {
+      const dto = createMock<AddPersonDtoBase>();
+      dto.name = '';
+      dto.role = 'administrator';
+
+      const transformResult: Promise<AddPersonDtoBase> = validator.transform(
+        dto,
+        metadata,
+      );
+
+      expect(transformResult).rejects.toThrow(BadRequestException);
+    });
+
+    it('Should throw due to name too short', () => {
+      const dto = createMock<AddPersonDtoBase>();
+      dto.name = 'j';
+      dto.role = 'administrator';
+
+      const transformResult: Promise<AddPersonDtoBase> = validator.transform(
+        dto,
+        metadata,
+      );
+
+      expect(transformResult).rejects.toThrow(BadRequestException);
+    });
+
+    it('Should throw due to name too long', () => {
+      const dto = createMock<AddPersonDtoBase>();
+      dto.name =
+        'jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj';
+      dto.role = 'administrator';
+
+      const transformResult: Promise<AddPersonDtoBase> = validator.transform(
+        dto,
+        metadata,
+      );
+
+      expect(transformResult).rejects.toThrow(BadRequestException);
+    });
+
+    it('Should throw due to empty role', () => {
+      const dto = createMock<AddPersonDtoBase>();
+      dto.name = 'james';
+      dto.role = '';
+
+      const transformResult: Promise<AddPersonDtoBase> = validator.transform(
+        dto,
+        metadata,
+      );
+
+      expect(transformResult).rejects.toThrow(BadRequestException);
     });
   });
 });

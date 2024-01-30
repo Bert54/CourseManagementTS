@@ -13,7 +13,7 @@ const getCourseMockImplementation = (
   course2: CourseEntity,
   course3: CourseEntity,
 ) => {
-  return (personId, courseId): Promise<CourseEntity> => {
+  return (personId: number, courseId: number): Promise<CourseEntity> => {
     let course: CourseEntity;
     if (course1.id == courseId && course1.teacher_id == personId) {
       course = course1;

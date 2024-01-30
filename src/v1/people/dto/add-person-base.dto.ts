@@ -8,6 +8,7 @@ export abstract class AddPersonDtoBase {
   name: string;
 
   @IsString()
+  @IsNotEmpty()
   role: string;
 
   format(): void {
