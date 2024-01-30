@@ -7,6 +7,7 @@ import { PersonEntity } from '../entities';
 import { GetUserOptionsInterface } from '../interfaces';
 import { LoggerService } from '../../../common/modules/logger';
 import { PersonAlreadyExistsError, PersonNotFoundError } from '../errors';
+import { PeopleRelationsEnum } from '../enums';
 
 @Injectable()
 export class PeopleDao {
@@ -31,15 +32,12 @@ export class PeopleDao {
 
   async findOne(
     conditions: Partial<GetUserOptionsInterface>,
+    relations?: PeopleRelationsEnum[],
   ): Promise<PersonEntity> {
     return await this.peopleRepository
       .findOne({
         where: conditions,
-        relations: [
-          'memberships',
-          'memberships.class_info',
-          'memberships.class_info.courses',
-        ],
+        relations: relations,
       })
       .then((person: PersonEntity) => {
         if (!person) {

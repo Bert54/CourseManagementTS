@@ -9,6 +9,7 @@ import {
   CheckPermissionGuard,
 } from '../../common/modules/authorization';
 import { NumericIdValidator } from '../../../common/validators';
+import { PeopleRelationsEnum } from '../enums';
 
 @Controller('/people')
 export class PeopleController {
@@ -23,15 +24,27 @@ export class PeopleController {
 
   @Get('/:id')
   getPersonById(@Param() id: NumericIdValidator): Promise<PersonEntity> {
-    return this.peopleService.getPerson({
-      id: id.id,
-    });
+    return this.peopleService.getPerson(
+      {
+        id: id.id,
+      },
+      [
+        PeopleRelationsEnum.Memberships,
+        PeopleRelationsEnum.Memberships_ClassInfo,
+      ],
+    );
   }
 
   @Get('/name/:name')
   getPersonByName(@Param('name') name: string): Promise<PersonEntity> {
-    return this.peopleService.getPerson({
-      name: name,
-    });
+    return this.peopleService.getPerson(
+      {
+        name: name,
+      },
+      [
+        PeopleRelationsEnum.Memberships,
+        PeopleRelationsEnum.Memberships_ClassInfo,
+      ],
+    );
   }
 }

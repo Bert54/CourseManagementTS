@@ -5,7 +5,7 @@ import { AddCourseBaseDto } from '../dto';
 import { CourseEntity } from '../entities';
 import { ClassesMembershipService, ClassesService } from '../../classes';
 import { CourseCreationForbiddenError } from '../errors';
-import { PeopleService } from '../../people';
+import { PeopleService, PeopleRelationsEnum } from '../../people';
 
 @Injectable()
 export class CoursesService {
@@ -61,9 +61,16 @@ export class CoursesService {
 
   getAllCoursesFromOwnClass(personId: number): Promise<CourseEntity[]> {
     return this.peopleService
-      .getPerson({
-        id: personId,
-      })
+      .getPerson(
+        {
+          id: personId,
+        },
+        [
+          PeopleRelationsEnum.Memberships,
+          PeopleRelationsEnum.Memberships_ClassInfo,
+          PeopleRelationsEnum.Memberships_ClassInfo_Courses,
+        ],
+      )
       .then((person) => {
         const courses: CourseEntity[] = [];
         person.memberships.forEach((membership) => {

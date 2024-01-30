@@ -4,6 +4,7 @@ import { AddPersonDtoBase } from '../dto';
 import { PersonEntity } from '../entities';
 import { PeopleDao } from '../dao';
 import { GetUserOptionsInterface } from '../interfaces';
+import { PeopleRelationsEnum } from '../enums';
 
 @Injectable()
 export class PeopleService {
@@ -24,13 +25,20 @@ export class PeopleService {
 
   async getPerson(
     options: Partial<GetUserOptionsInterface>,
+    relations?: PeopleRelationsEnum[],
   ): Promise<PersonEntity> {
-    return await this.peopleDao.findOne(options).then((person) => {
-      // transfer classes gotten from memberships directly into the person object
-      person.classes = [];
-      person.memberships.forEach((membership) =>
-        person.classes.push(membership.class_info),
-      );
+    return await this.peopleDao.findOne(options, relations).then((person) => {
+      // transfer classes gotten from memberships directly into the person object if possible
+      if (
+        !!relations &&
+        relations.includes(PeopleRelationsEnum.Memberships) &&
+        relations.includes(PeopleRelationsEnum.Memberships_ClassInfo)
+      ) {
+        person.classes = [];
+        person.memberships.forEach((membership) =>
+          person.classes.push(membership.class_info),
+        );
+      }
       return person;
     });
   }
