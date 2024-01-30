@@ -41,7 +41,7 @@ describe('PeopleController', () => {
       person.id = 1;
       person.name = 'james';
 
-      peopleService.getPersonById.mockReturnValue(
+      peopleService.getPerson.mockReturnValue(
         new Promise<PersonEntity>(() => person),
       );
 
@@ -64,13 +64,13 @@ describe('PeopleController', () => {
       person2.id = 2;
       person2.name = 'natalya';
 
-      peopleService.getPersonById.mockImplementation(
-        (id: number): Promise<PersonEntity> => {
+      peopleService.getPerson.mockImplementation(
+        (options): Promise<PersonEntity> => {
           let person: PersonEntity;
-          if (id === 1) {
+          if (options.id === 1) {
             person = person1;
           }
-          if (id === 2) {
+          if (options.id === 2) {
             person = person2;
           }
           return new Promise(() => person);
@@ -97,11 +97,9 @@ describe('PeopleController', () => {
     });
 
     it('should throw an error', () => {
-      peopleService.getPersonById.mockImplementation(
-        (): Promise<PersonEntity> => {
-          return Promise.reject(new NotFoundError('not found'));
-        },
-      );
+      peopleService.getPerson.mockImplementation((): Promise<PersonEntity> => {
+        return Promise.reject(new NotFoundError('not found'));
+      });
 
       expect(
         peopleController.getPersonById({
@@ -126,7 +124,7 @@ describe('PeopleController', () => {
       person.id = 1;
       person.name = 'james';
 
-      peopleService.getPersonByName.mockReturnValue(
+      peopleService.getPerson.mockReturnValue(
         new Promise<PersonEntity>(() => person),
       );
 
@@ -147,17 +145,17 @@ describe('PeopleController', () => {
       person2.id = 2;
       person2.name = 'natalya';
 
-      peopleService.getPersonByName.mockReturnValue(
+      peopleService.getPerson.mockReturnValue(
         new Promise<PersonEntity>(() => person1),
       );
 
-      peopleService.getPersonByName.mockImplementation(
-        (name: string): Promise<PersonEntity> => {
+      peopleService.getPerson.mockImplementation(
+        (options): Promise<PersonEntity> => {
           let person: PersonEntity;
-          if (name === 'james') {
+          if (options.name === 'james') {
             person = person1;
           }
-          if (name === 'natalya') {
+          if (options.name === 'natalya') {
             person = person2;
           }
           return new Promise(() => person);
@@ -180,11 +178,9 @@ describe('PeopleController', () => {
     });
 
     it('should throw an error', () => {
-      peopleService.getPersonByName.mockImplementation(
-        (): Promise<PersonEntity> => {
-          return Promise.reject(new NotFoundError('not found'));
-        },
-      );
+      peopleService.getPerson.mockImplementation((): Promise<PersonEntity> => {
+        return Promise.reject(new NotFoundError('not found'));
+      });
 
       expect(peopleController.getPersonByName('james')).rejects.toThrow(
         NotFoundError,
