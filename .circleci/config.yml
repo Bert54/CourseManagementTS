@@ -3,7 +3,7 @@
 version: 2.1
 orbs:
   node: circleci/node@5
-  codecov: codecov/codecov@3.2.4
+  codecov: codecov/codecov@4.0.0
 jobs:
   test-node:
     # Install node dependencies and run tests
@@ -35,6 +35,23 @@ jobs:
           command: npm run test --ci --runInBand --reporters=default --reporters=jest-junit
       - store_test_results:
           path: ./test-results/
+  code-coverage:
+    # Install node dependencies and run tests
+    executor: node/default
+    environment:
+      JEST_JUNIT_OUTPUT_DIR: ./test-results/
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: npm
+      - run:
+          command: npm install jest-junit
+      - run:
+          name: Run tests
+          command: npm run test:cov --ci --runInBand --reporters=default --reporters=jest-junit
+      - store_test_results:
+          path: ./test-results/
+      - codecov/upload
   build-node:
     # Build node project
     executor: node/default
