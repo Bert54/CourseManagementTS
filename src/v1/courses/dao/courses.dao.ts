@@ -4,8 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { QueryFailedError, Repository } from 'typeorm';
 
 import { CourseEntity } from '../entities';
-import { CourseNotFoundError } from '../errors';
-import { BadRequestError } from '../../common/errors';
+import { CourseAlreadyExistsError, CourseNotFoundError } from '../errors';
 import { LoggerService } from '../../../common/modules/logger';
 
 @Injectable()
@@ -22,7 +21,7 @@ export class CoursesDao {
       .catch((error) => {
         // can only be thrown because of fk constraint referencing class.name
         if (error.constructor === QueryFailedError) {
-          error = new BadRequestError(
+          error = new CourseAlreadyExistsError(
             `Class with name '${course.student_class}' does not exist`,
           );
         }

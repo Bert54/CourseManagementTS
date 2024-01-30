@@ -9,6 +9,22 @@ import { PersonAlreadyExistsError } from '../errors';
 import { CheckPermissionService } from '../../common/modules/authorization';
 import { NotFoundError } from '../../common/errors';
 
+const getPersonMockImplementation = (
+  person1: PersonEntity,
+  person2: PersonEntity,
+) => {
+  return (options): Promise<PersonEntity> => {
+    let person: PersonEntity;
+    if (options.id === 1) {
+      person = person1;
+    }
+    if (options.id === 2) {
+      person = person2;
+    }
+    return new Promise(() => person);
+  };
+};
+
 describe('PeopleController', () => {
   let peopleController: PeopleController;
   let peopleService: DeepMocked<PeopleService>;
@@ -65,16 +81,7 @@ describe('PeopleController', () => {
       person2.name = 'natalya';
 
       peopleService.getPerson.mockImplementation(
-        (options): Promise<PersonEntity> => {
-          let person: PersonEntity;
-          if (options.id === 1) {
-            person = person1;
-          }
-          if (options.id === 2) {
-            person = person2;
-          }
-          return new Promise(() => person);
-        },
+        getPersonMockImplementation(person1, person2),
       );
 
       let gottenPerson = peopleController.getPersonById({
@@ -150,16 +157,7 @@ describe('PeopleController', () => {
       );
 
       peopleService.getPerson.mockImplementation(
-        (options): Promise<PersonEntity> => {
-          let person: PersonEntity;
-          if (options.name === 'james') {
-            person = person1;
-          }
-          if (options.name === 'natalya') {
-            person = person2;
-          }
-          return new Promise(() => person);
-        },
+        getPersonMockImplementation(person1, person2),
       );
 
       let gottenPerson = peopleController.getPersonByName('james');
