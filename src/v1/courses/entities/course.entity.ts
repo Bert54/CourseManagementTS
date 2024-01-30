@@ -25,7 +25,7 @@ export class CourseEntity {
   @Column()
   content: string;
 
-  @ManyToOne(() => ClassEntity, (cls) => cls.courses)
+  @ManyToOne('ClassEntity', 'courses')
   @JoinColumn({ name: 'student_class', referencedColumnName: 'name' })
   cls: ClassEntity;
 

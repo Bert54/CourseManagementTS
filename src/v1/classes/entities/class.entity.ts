@@ -18,14 +18,14 @@ export class ClassEntity {
   @Column({ name: 'name' })
   name: string;
 
-  @OneToMany(() => ClassMembershipEntity, (membership) => membership.class_info)
+  @OneToMany('ClassMembershipEntity', 'class_info')
   @JoinColumn({ name: 'name', referencedColumnName: 'class_info' })
   @Exclude()
   members_cls: ClassMembershipEntity[];
 
   members: PersonEntity[];
 
-  @OneToMany(() => CourseEntity, (course) => course.cls)
+  @OneToMany('CourseEntity', 'cls')
   @JoinColumn({ name: 'name', referencedColumnName: 'student_class' })
   @Exclude()
   courses: CourseEntity[];
