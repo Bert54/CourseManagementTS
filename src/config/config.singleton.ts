@@ -1,6 +1,7 @@
 import process from 'process';
 import * as yaml from 'js-yaml';
 import * as fs from 'fs';
+import dotenv from 'dotenv';
 
 const defaultPath = 'config/default.yml';
 
@@ -10,6 +11,7 @@ export class ConfigSingleton {
   private readonly config: Record<string, any>;
 
   private constructor() {
+    dotenv.config();
     const path: string = !!process.env.CONFIG_FILE_PATH
       ? process.env.CONFIG_FILE_PATH
       : defaultPath;
