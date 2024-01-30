@@ -1,6 +1,12 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
 
-import { BadRequestError, BaseError, ForbiddenError, NotFoundError, UnauthorizedError } from './types';
+import {
+  BadRequestError,
+  BaseError,
+  ForbiddenError,
+  NotFoundError,
+  UnauthorizedError,
+} from './types';
 
 export const genericErrorMessage: string =
   'Something went wrong while processing the request';
@@ -8,6 +14,11 @@ export const genericErrorMessage: string =
 export const handleError = (error: BaseError): HttpException => {
   if (!error) {
     // no error => log here the inappropriate use of this function
+  }
+
+  // HttpException => don't do anything and just return the error as is
+  if (error instanceof HttpException) {
+    return error;
   }
 
   // BadRequestError => return a 400

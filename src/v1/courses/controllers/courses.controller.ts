@@ -9,20 +9,19 @@ import {
 } from '@nestjs/common';
 
 import { CourseEntity } from '../entities';
-import {
-  BaseError,
-  CheckPermission,
-  CheckPermissionGuard,
-  handleError,
-} from '../../common';
-import {
-  COURSE_CREATE,
-  COURSE_FETCH,
-  headerWithPersonId,
-  NumericIdValidator,
-} from '../../../common';
 import { AddCourseDto } from '../dto';
 import { CoursesService } from '../services';
+import {
+  CheckPermission,
+  CheckPermissionGuard,
+} from '../../common/modules/authorization';
+import {
+  CLASS_COURSE_FETCH,
+  COURSE_CREATE,
+  COURSE_FETCH,
+  HEADER_WITH_PERSON_ID,
+} from '../../../common/constants';
+import { NumericIdValidator } from '../../../common/validators';
 
 @Controller('/courses')
 export class CoursesController {
@@ -31,52 +30,37 @@ export class CoursesController {
   @UseGuards(CheckPermissionGuard)
   @CheckPermission(COURSE_CREATE)
   addCourse(
-    @Headers(headerWithPersonId) personId: string,
+    @Headers(HEADER_WITH_PERSON_ID) personId: string,
     @Body() addCourseDto: AddCourseDto,
   ): Promise<CourseEntity> {
-    return this.coursesService
-      .addCourse(personId, addCourseDto)
-      .catch((error: BaseError) => {
-        throw handleError(error);
-      });
+    return this.coursesService.addCourse(Number(personId), addCourseDto);
   }
 
   @Get()
   @UseGuards(CheckPermissionGuard)
   @CheckPermission(COURSE_FETCH)
   getAllOwnCourses(
-    @Headers(headerWithPersonId) personId: string,
+    @Headers(HEADER_WITH_PERSON_ID) personId: string,
   ): Promise<CourseEntity[]> {
-    let tId: number;
-    if (typeof personId == 'string') {
-      tId = Number(personId);
-    } else {
-      tId = personId;
-    }
-    return this.coursesService
-      .getAllOwnCourses(tId)
-      .catch((error: BaseError) => {
-        throw handleError(error);
-      });
+    return this.coursesService.getAllOwnCourses(Number(personId));
   }
 
   @Get('/:id')
   @UseGuards(CheckPermissionGuard)
   @CheckPermission(COURSE_FETCH)
   getOneCourse(
-    @Headers(headerWithPersonId) personId: string,
+    @Headers(HEADER_WITH_PERSON_ID) personId: string,
     @Param() id: NumericIdValidator,
   ): Promise<CourseEntity> {
-    let tId: number;
-    if (typeof personId == 'string') {
-      tId = Number(personId);
-    } else {
-      tId = personId;
-    }
-    return this.coursesService
-      .getOneOwnCourse(id.id, tId)
-      .catch((error: BaseError) => {
-        throw handleError(error);
-      });
+    return this.coursesService.getOneOwnCourse(id.id, Number(personId));
+  }
+
+  @Get('/own/classes')
+  @UseGuards(CheckPermissionGuard)
+  @CheckPermission(CLASS_COURSE_FETCH)
+  getAllCoursesFromOwnClass(
+    @Headers(HEADER_WITH_PERSON_ID) personId: string,
+  ): Promise<CourseEntity[]> {
+    return this.coursesService.getAllCoursesFromOwnClass(Number(personId));
   }
 }

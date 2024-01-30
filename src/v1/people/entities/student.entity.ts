@@ -2,6 +2,7 @@ import { ChildEntity } from 'typeorm';
 
 import { PersonEntity } from './person.entity';
 import { PERSON_ROLE_STUDENT } from '../constants';
+import { CLASS_COURSE_FETCH, CLASS_JOIN } from '../../../common/constants';
 
 @ChildEntity(PERSON_ROLE_STUDENT)
 export class StudentEntity extends PersonEntity {
@@ -10,6 +11,6 @@ export class StudentEntity extends PersonEntity {
   }
 
   getPermissions(): string[] {
-    return [];
+    return [CLASS_JOIN, CLASS_COURSE_FETCH];
   }
 }

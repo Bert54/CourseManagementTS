@@ -1,37 +1,50 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 
 import { PeopleService } from '../services';
 import { AddPersonDto } from '../dto';
 import { PersonEntity } from '../entities';
-import { BaseError, handleError } from '../../common';
-import { NumericIdValidator } from '../../../common';
+import { PERSON_CREATE } from '../../../common/constants';
+import {
+  CheckPermission,
+  CheckPermissionGuard,
+} from '../../common/modules/authorization';
+import { NumericIdValidator } from '../../../common/validators';
+import { PeopleRelationsEnum } from '../enums';
 
 @Controller('/people')
 export class PeopleController {
   constructor(private readonly peopleService: PeopleService) {}
 
   @Post()
+  @UseGuards(CheckPermissionGuard)
+  @CheckPermission(PERSON_CREATE)
   addPerson(@Body() addPersonDto: AddPersonDto): Promise<PersonEntity> {
-    return this.peopleService
-      .addPerson(addPersonDto)
-      .catch((error: BaseError) => {
-        throw handleError(error);
-      });
+    return this.peopleService.addPerson(addPersonDto);
   }
 
   @Get('/:id')
   getPersonById(@Param() id: NumericIdValidator): Promise<PersonEntity> {
-    return this.peopleService.getPersonById(id.id).catch((error: BaseError) => {
-      throw handleError(error);
-    });
+    return this.peopleService.getPerson(
+      {
+        id: id.id,
+      },
+      [
+        PeopleRelationsEnum.Memberships,
+        PeopleRelationsEnum.Memberships_ClassInfo,
+      ],
+    );
   }
 
   @Get('/name/:name')
   getPersonByName(@Param('name') name: string): Promise<PersonEntity> {
-    return this.peopleService
-      .getPersonByName(name)
-      .catch((error: BaseError) => {
-        throw handleError(error);
-      });
+    return this.peopleService.getPerson(
+      {
+        name: name,
+      },
+      [
+        PeopleRelationsEnum.Memberships,
+        PeopleRelationsEnum.Memberships_ClassInfo,
+      ],
+    );
   }
 }

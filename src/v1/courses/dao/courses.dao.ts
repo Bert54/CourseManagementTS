@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { Repository } from 'typeorm';
+import { QueryFailedError, Repository } from 'typeorm';
 
-import { LoggerService } from '../../../common';
 import { CourseEntity } from '../entities';
 import { CourseNotFoundError } from '../errors';
+import { BadRequestError } from '../../common/errors';
+import { LoggerService } from '../../../common/modules/logger';
 
 @Injectable()
 export class CoursesDao {
@@ -19,6 +20,12 @@ export class CoursesDao {
     return await this.coursesRepository
       .save<CourseEntity>(course)
       .catch((error) => {
+        // can only be thrown because of fk constraint referencing class.name
+        if (error.constructor === QueryFailedError) {
+          error = new BadRequestError(
+            `Class with name '${course.student_class}' does not exist`,
+          );
+        }
         this.logger.log(
           `Could not save new course [error: '${error.message}']`,
         );

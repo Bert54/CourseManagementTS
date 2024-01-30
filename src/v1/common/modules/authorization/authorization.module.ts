@@ -1,6 +1,9 @@
 import { forwardRef, Global, Module } from '@nestjs/common';
 
-import { CheckPermissionGuard, CheckPermissionService } from './check-permission';
+import {
+  CheckPermissionGuard,
+  CheckPermissionService,
+} from './check-permission';
 import { PeopleModule } from '../../../people';
 
 @Global()

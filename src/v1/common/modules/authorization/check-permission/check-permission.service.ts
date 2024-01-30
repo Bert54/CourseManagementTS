@@ -10,14 +10,13 @@ export class CheckPermissionService {
     private peopleService: PeopleService,
   ) {}
 
-  hasPermission(personId: number, permission: string): Promise<boolean> {
-    return this.peopleService.getPersonById(personId).then((person) => {
-      if (!person.getPermissions().includes(permission)) {
-        throw new ForbiddenError(
-          `Person is not allowed to perform this action`,
-        );
-      }
-      return true;
+  async hasPermission(personId: number, permission: string): Promise<boolean> {
+    const person = await this.peopleService.getPerson({
+      id: personId,
     });
+    if (!person.getPermissions().includes(permission)) {
+      throw new ForbiddenError(`Person is not allowed to perform this action`);
+    }
+    return true;
   }
 }

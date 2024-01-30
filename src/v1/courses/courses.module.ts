@@ -5,9 +5,15 @@ import { CoursesController } from './controllers';
 import { CoursesService } from './services';
 import { CoursesDao } from './dao';
 import { CourseEntity } from './entities';
+import { ClassesModule } from '../classes';
+import { PeopleModule } from '../people';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([CourseEntity])],
+  imports: [
+    ClassesModule,
+    PeopleModule,
+    TypeOrmModule.forFeature([CourseEntity]),
+  ],
   controllers: [CoursesController],
   providers: [CoursesService, CoursesDao],
 })

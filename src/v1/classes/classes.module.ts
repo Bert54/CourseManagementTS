@@ -1,14 +1,20 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { ClassesController } from './controllers';
-import { ClassesService } from './services';
-import { ClassEntity } from './entities';
-import { ClassesDao } from './dao/classes.dao';
+import { ClassesController, ClassesMembershipController } from './controllers';
+import { ClassesMembershipService, ClassesService } from './services';
+import { ClassEntity, ClassMembershipEntity } from './entities';
+import { ClassesDao, ClassesMembershipDao } from './dao';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ClassEntity])],
-  controllers: [ClassesController],
-  providers: [ClassesService, ClassesDao],
+  imports: [TypeOrmModule.forFeature([ClassEntity, ClassMembershipEntity])],
+  controllers: [ClassesController, ClassesMembershipController],
+  providers: [
+    ClassesService,
+    ClassesDao,
+    ClassesMembershipService,
+    ClassesMembershipDao,
+  ],
+  exports: [ClassesService, ClassesMembershipService],
 })
 export class ClassesModule {}

@@ -1,12 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { BeforeRemove, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 
 import { ClassEntity } from '../entities';
-import { LoggerService } from '../../../common';
 import { ClassAlreadyExistsError, ClassNotFoundError } from '../errors';
-import { PersonEntity } from '../../people';
+import { LoggerService } from '../../../common/modules/logger';
 
 @Injectable()
 export class ClassesDao {
@@ -29,8 +28,11 @@ export class ClassesDao {
 
   async findOneByName(name: string): Promise<ClassEntity> {
     return await this.classesRepository
-      .findOneBy({
-        name: name,
+      .findOne({
+        where: {
+          name: name,
+        },
+        relations: ['members_cls', 'members_cls.person'],
       })
       .then((person: ClassEntity) => {
         if (!person) {
@@ -49,8 +51,8 @@ export class ClassesDao {
   }
 
   async deleteOneByName(name: string): Promise<ClassEntity> {
-    const findPromise = Promise.resolve(this.findOneByName(name));
-    const deletePromise = Promise.resolve(
+    const findPromise = await Promise.resolve(this.findOneByName(name));
+    const deletePromise = await Promise.resolve(
       this.classesRepository
         .delete({
           name: name,
@@ -71,13 +73,7 @@ export class ClassesDao {
         }),
     );
     return await Promise.all([findPromise, deletePromise]).then((values) => {
-      let classEntity: ClassEntity;
-      values.forEach((currentValue) => {
-        if (!!currentValue) {
-          classEntity = currentValue;
-        }
-      });
-      return classEntity;
+      return values[0];
     });
   }
 }
