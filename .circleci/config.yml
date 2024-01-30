@@ -3,7 +3,6 @@
 version: 2.1
 orbs:
   node: circleci/node@5
-  codecov: codecov/codecov@4.0.0
 jobs:
   test-node:
     # Install node dependencies and run tests
