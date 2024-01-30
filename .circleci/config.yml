@@ -98,6 +98,9 @@ workflows:
   build-and-test:
     jobs:
       - test-node
+      - code-coverage:
+          requires:
+            - test-node
       - build-node:
           requires:
             - test-node
