@@ -32,11 +32,22 @@ jobs:
           command: npm install jest-junit
       - run:
           name: Run tests
-          command: npm run test:cov --ci --runInBand --reporters=default --reporters=jest-junit
-      - codecov/upload:
-          file: ../coverage/coverage-final.json
+          command: npm run test --ci --runInBand --reporters=default --reporters=jest-junit
       - store_test_results:
           path: ./test-results/
+  code-coverage:
+    # Install node dependencies and run tests
+    executor: node/default
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: npm
+      - run:
+          command: npm install jest-junit
+      - run:
+          name: Run tests
+          command: npm run test:cov --ci --runInBand --reporters=default --reporters=jest-junit
+      - codecov/upload
   build-node:
     # Build node project
     executor: node/default
@@ -83,6 +94,9 @@ workflows:
   build-and-test:
     jobs:
       - test-node
+      - code-coverage:
+          requires:
+            - test-node
       - build-node:
           requires:
             - test-node
