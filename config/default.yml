@@ -6,5 +6,4 @@ sql-database:
   host: localhost
   port: 5432
   username: postgres
-  password: pootisspenserhere
   database: course_management_ts
