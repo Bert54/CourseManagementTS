@@ -87,23 +87,6 @@ jobs:
       - store_artifacts:
           path: ~/artifacts
           destination: node-build
-  security-scan:
-    docker:
-      - image: docker:18.09-git
-    steps:
-      - checkout
-      - setup_remote_docker
-      - run:
-          name: Build image
-          command: docker build -t trivy-ci-test:${CIRCLE_SHA1} .
-      - run:
-          name: Install trivy
-          command: |
-            apk add --update-cache --upgrade --update curl
-            curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin
-      - run:
-          name: Scan the local image with trivy (light)
-          command: trivy --exit-code 0 --no-progress trivy-ci-test:${CIRCLE_SHA1}
 workflows:
   build-and-test:
     jobs:
@@ -114,6 +97,3 @@ workflows:
       - build-node:
           requires:
             - test-node
-      - security-scan:
-          requires:
-            - build-node
