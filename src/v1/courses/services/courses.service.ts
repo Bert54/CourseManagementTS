@@ -47,24 +47,23 @@ export class CoursesService {
     return this.coursesDao.findOne(courseId, teacherId);
   }
 
-  getAllCoursesFromOwnClass(personId: number): Promise<CourseEntity[]> {
-    return this.peopleService
-      .getPerson(
-        {
-          id: personId,
-        },
-        [
-          PeopleRelationsEnum.Memberships,
-          PeopleRelationsEnum.Memberships_ClassInfo,
-          PeopleRelationsEnum.Memberships_ClassInfo_Courses,
-        ],
-      )
-      .then((person) => {
-        const courses: CourseEntity[] = [];
-        person.memberships.forEach((membership) => {
-          courses.push(...membership.class_info.courses);
-        });
-        return courses;
+  async getAllCoursesFromOwnClass(personId: number): Promise<CourseEntity[]> {
+    const person = await this.peopleService.getPerson(
+      {
+        id: personId,
+      },
+      [
+        PeopleRelationsEnum.Memberships,
+        PeopleRelationsEnum.Memberships_ClassInfo,
+        PeopleRelationsEnum.Memberships_ClassInfo_Courses,
+      ],
+    );
+    const courses: CourseEntity[] = [];
+    if (!!person.memberships) {
+      person.memberships.forEach((membership) => {
+        courses.push(...membership.class_info.courses);
       });
+    }
+    return courses;
   }
 }
