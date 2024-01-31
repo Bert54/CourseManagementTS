@@ -1,4 +1,4 @@
-import { NotFoundError } from 'rxjs';
+import { NotFoundError } from '../../common/errors';
 
 export class ClassNotFoundError extends NotFoundError {
   constructor(message: string) {
