@@ -16,9 +16,11 @@ export class ClassesService {
     return await this.classesDao.findOneByName(className).then((cls) => {
       // transfer people gotten from memberships directly into the class object
       cls.members = [];
-      cls.members_cls.forEach((membership) =>
-        cls.members.push(membership.person),
-      );
+      if (!!cls.members_cls) {
+        cls.members_cls.forEach((membership) =>
+          cls.members.push(membership.person),
+        );
+      }
       return cls;
     });
   }
