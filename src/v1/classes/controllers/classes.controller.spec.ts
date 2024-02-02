@@ -47,7 +47,7 @@ describe('ClassesController', () => {
       ],
     }).compile();
 
-    classesController = module.get<ClassesController>(ClassesController);
+    classesController = module.get(ClassesController);
     classesService = module.get(ClassesService);
   });
 

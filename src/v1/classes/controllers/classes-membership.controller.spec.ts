@@ -30,9 +30,7 @@ describe('ClassesMembershipController', () => {
       ],
     }).compile();
 
-    classesMembershipController = module.get<ClassesMembershipController>(
-      ClassesMembershipController,
-    );
+    classesMembershipController = module.get(ClassesMembershipController);
     classesMembershipService = module.get(ClassesMembershipService);
   });
 
