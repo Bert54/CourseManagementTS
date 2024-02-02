@@ -15,13 +15,13 @@ const getCourseMockImplementation = (
 ) => {
   return (personId: number, courseId: number): Promise<CourseEntity> => {
     let course: CourseEntity;
-    if (course1.id == courseId && course1.teacher_id == personId) {
+    if (course1.id === courseId && course1.teacher_id === personId) {
       course = course1;
     }
-    if (course2.id == courseId && course2.teacher_id == personId) {
+    if (course2.id === courseId && course2.teacher_id === personId) {
       course = course2;
     }
-    if (course3.id == courseId && course3.teacher_id == personId) {
+    if (course3.id === courseId && course3.teacher_id === personId) {
       course = course3;
     }
 
@@ -29,7 +29,7 @@ const getCourseMockImplementation = (
   };
 };
 
-describe('CourseController', () => {
+describe('CoursesController', () => {
   let coursesController: CoursesController;
   let coursesService: DeepMocked<CoursesService>;
 
