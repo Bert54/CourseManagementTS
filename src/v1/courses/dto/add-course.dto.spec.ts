@@ -3,11 +3,9 @@ import {
   BadRequestException,
   ValidationPipe,
 } from '@nestjs/common';
-import { createMock } from '@golevelup/ts-jest';
 
 import { AddCourseDto } from './add-course.dto';
 import { CourseEntity } from '../entities';
-import { AddCourseBaseDto } from './add-course-base.dto';
 
 describe('AddCourseDto', () => {
   // ------------------------------------
@@ -88,12 +86,12 @@ describe('AddCourseDto', () => {
     });
 
     it('should be OK', () => {
-      const dto = createMock<AddCourseBaseDto>();
+      const dto = new AddCourseDto();
       dto.student_class = 'MI6';
       dto.title = 'How to be a good secret agent';
       dto.content = `It's a secret!`;
 
-      const transformResult: Promise<AddCourseBaseDto> = validator.transform(
+      const transformResult: Promise<AddCourseDto> = validator.transform(
         dto,
         metadata,
       );
@@ -102,12 +100,12 @@ describe('AddCourseDto', () => {
     });
 
     it('should fail due to empty class', () => {
-      const dto = createMock<AddCourseBaseDto>();
+      const dto = new AddCourseDto();
       dto.student_class = '';
       dto.title = 'How to be a good secret agent';
       dto.content = `It's a secret!`;
 
-      const transformResult: Promise<AddCourseBaseDto> = validator.transform(
+      const transformResult: Promise<AddCourseDto> = validator.transform(
         dto,
         metadata,
       );
@@ -116,12 +114,12 @@ describe('AddCourseDto', () => {
     });
 
     it('should fail due to class name too long', () => {
-      const dto = createMock<AddCourseBaseDto>();
+      const dto = new AddCourseDto();
       dto.student_class = 'MI6666666666666666666666666666666666666666666666';
       dto.title = 'How to be a good secret agent';
       dto.content = `It's a secret!`;
 
-      const transformResult: Promise<AddCourseBaseDto> = validator.transform(
+      const transformResult: Promise<AddCourseDto> = validator.transform(
         dto,
         metadata,
       );
@@ -130,12 +128,12 @@ describe('AddCourseDto', () => {
     });
 
     it('should fail due to empty title', () => {
-      const dto = createMock<AddCourseBaseDto>();
+      const dto = new AddCourseDto();
       dto.student_class = 'MI6';
       dto.title = '';
       dto.content = `It's a secret!`;
 
-      const transformResult: Promise<AddCourseBaseDto> = validator.transform(
+      const transformResult: Promise<AddCourseDto> = validator.transform(
         dto,
         metadata,
       );
@@ -144,12 +142,12 @@ describe('AddCourseDto', () => {
     });
 
     it('should fail due to title too short', () => {
-      const dto = createMock<AddCourseBaseDto>();
+      const dto = new AddCourseDto();
       dto.student_class = 'MI6';
       dto.title = '';
       dto.content = `It's a secret!`;
 
-      const transformResult: Promise<AddCourseBaseDto> = validator.transform(
+      const transformResult: Promise<AddCourseDto> = validator.transform(
         dto,
         metadata,
       );
@@ -158,13 +156,13 @@ describe('AddCourseDto', () => {
     });
 
     it('should fail due to title too long', () => {
-      const dto = createMock<AddCourseBaseDto>();
+      const dto = new AddCourseDto();
       dto.student_class = 'MI6';
       dto.title =
         'How to be a good secret agentHow to be a good secret agentHow to be a good secret agentHow to be a good secret agentHow to be a good secret agentHow to be a good secret agentHow to be a good secret agent';
       dto.content = `It's a secret!`;
 
-      const transformResult: Promise<AddCourseBaseDto> = validator.transform(
+      const transformResult: Promise<AddCourseDto> = validator.transform(
         dto,
         metadata,
       );
@@ -173,12 +171,12 @@ describe('AddCourseDto', () => {
     });
 
     it('should fail due to empty content', () => {
-      const dto = createMock<AddCourseBaseDto>();
+      const dto = new AddCourseDto();
       dto.student_class = 'MI6';
       dto.title = 'How to be a good secret agent';
       dto.content = ``;
 
-      const transformResult: Promise<AddCourseBaseDto> = validator.transform(
+      const transformResult: Promise<AddCourseDto> = validator.transform(
         dto,
         metadata,
       );

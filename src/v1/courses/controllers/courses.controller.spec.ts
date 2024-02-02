@@ -5,7 +5,7 @@ import { CoursesController } from './courses.controller';
 import { CoursesService } from '../services';
 import { CheckPermissionService } from '../../common/modules/authorization';
 import { CourseEntity } from '../entities';
-import { AddCourseBaseDto } from '../dto';
+import { AddCourseDto } from '../dto';
 import { CourseAlreadyExistsError, CourseNotFoundError } from '../errors';
 
 const getCourseMockImplementation = (
@@ -62,7 +62,7 @@ describe('CourseController', () => {
       course.title = 'How to be a secret agent';
       course.content = 'Just';
 
-      const dto = createMock<AddCourseBaseDto>();
+      const dto = createMock<AddCourseDto>();
       dto.title = 'How to be a secret agent';
       dto.content = 'Just';
 
@@ -82,7 +82,7 @@ describe('CourseController', () => {
         );
       });
 
-      const dto = createMock<AddCourseBaseDto>();
+      const dto = createMock<AddCourseDto>();
       dto.title = 'How to be a secret agent';
       dto.content = 'Just';
 

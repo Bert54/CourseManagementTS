@@ -4,7 +4,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { CoursesService } from './courses.service';
 import { PeopleService, PersonEntity } from '../../people';
 import { CourseEntity } from '../entities';
-import { AddCourseBaseDto } from '../dto';
+import { AddCourseDto } from '../dto';
 import { CoursesDao } from '../dao';
 import { ClassesMembershipService, ClassesService } from '../../classes';
 import { ClassEntity, ClassMembershipEntity } from '../../classes/entities';
@@ -60,7 +60,7 @@ describe('CoursesService', () => {
       course.title = 'How to be a secret agent';
       course.content = 'Just';
 
-      const dto = createMock<AddCourseBaseDto>();
+      const dto = createMock<AddCourseDto>();
       dto.student_class = 'MI6';
       dto.title = 'How to be a secret agent';
       dto.content = 'Just';
@@ -80,7 +80,7 @@ describe('CoursesService', () => {
     });
 
     it('should return an error if class was not found', async () => {
-      const dto = createMock<AddCourseBaseDto>();
+      const dto = createMock<AddCourseDto>();
       dto.student_class = 'MI6';
       dto.title = 'How to be a secret agent';
       dto.content = 'Just';
@@ -99,7 +99,7 @@ describe('CoursesService', () => {
     });
 
     it('should return an error if person is not a member of class', async () => {
-      const dto = createMock<AddCourseBaseDto>();
+      const dto = createMock<AddCourseDto>();
       dto.student_class = 'MI6';
       dto.title = 'How to be a secret agent';
       dto.content = 'Just';

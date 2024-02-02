@@ -1,9 +1,11 @@
-import { ArgumentMetadata, BadRequestException, ValidationPipe } from '@nestjs/common';
-import { createMock } from '@golevelup/ts-jest';
+import {
+  ArgumentMetadata,
+  BadRequestException,
+  ValidationPipe,
+} from '@nestjs/common';
 
 import { AddClassDto } from './add-class.dto';
 import { ClassEntity } from '../entities';
-import { AddClassBaseDto } from './add-class-base.dto';
 
 describe('AddClassDto', () => {
   // ------------------------------------
@@ -71,10 +73,10 @@ describe('AddClassDto', () => {
     });
 
     it('should be OK', () => {
-      const dto = createMock<AddClassBaseDto>();
+      const dto = new AddClassDto();
       dto.name = 'MI6';
 
-      const transformResult: Promise<AddClassBaseDto> = validator.transform(
+      const transformResult: Promise<AddClassDto> = validator.transform(
         dto,
         metadata,
       );
@@ -83,9 +85,9 @@ describe('AddClassDto', () => {
     });
 
     it('should throw due to empty name', () => {
-      const dto = createMock<AddClassBaseDto>();
+      const dto = new AddClassDto();
 
-      const transformResult: Promise<AddClassBaseDto> = validator.transform(
+      const transformResult: Promise<AddClassDto> = validator.transform(
         dto,
         metadata,
       );
@@ -94,10 +96,10 @@ describe('AddClassDto', () => {
     });
 
     it('should throw due to name too long', () => {
-      const dto = createMock<AddClassBaseDto>();
+      const dto = new AddClassDto();
       dto.name = 'MI666666666666666666666666666666';
 
-      const transformResult: Promise<AddClassBaseDto> = validator.transform(
+      const transformResult: Promise<AddClassDto> = validator.transform(
         dto,
         metadata,
       );

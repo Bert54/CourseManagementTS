@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
 
 import { ClassesDao } from '../dao';
-import { AddClassBaseDto } from '../dto';
+import { AddClassDto } from '../dto';
 import { ClassEntity } from '../entities';
 
 @Injectable()
 export class ClassesService {
   constructor(private classesDao: ClassesDao) {}
 
-  addClass(addClassDto: AddClassBaseDto): Promise<ClassEntity> {
+  addClass(addClassDto: AddClassDto): Promise<ClassEntity> {
     return this.classesDao.save(addClassDto.toClassEntity());
   }
 

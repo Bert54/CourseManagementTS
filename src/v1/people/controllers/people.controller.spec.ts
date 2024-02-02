@@ -4,7 +4,7 @@ import { createMock, DeepMocked } from '@golevelup/ts-jest';
 import { PeopleController } from './people.controller';
 import { PeopleService } from '../services';
 import { PersonEntity } from '../entities';
-import { AddPersonDtoBase } from '../dto';
+import { AddPersonDto } from '../dto';
 import { PersonAlreadyExistsError } from '../errors';
 import { CheckPermissionService } from '../../common/modules/authorization';
 import { NotFoundError } from '../../common/errors';
@@ -200,7 +200,7 @@ describe('PeopleController', () => {
       person.id = 1;
       person.name = 'james';
 
-      const dto = createMock<AddPersonDtoBase>();
+      const dto = createMock<AddPersonDto>();
       dto.name = 'james';
 
       peopleService.addPerson.mockReturnValue(
@@ -217,7 +217,7 @@ describe('PeopleController', () => {
         return Promise.reject(new PersonAlreadyExistsError('already exists'));
       });
 
-      const dto = createMock<AddPersonDtoBase>();
+      const dto = createMock<AddPersonDto>();
       dto.name = 'james';
 
       expect(peopleController.addPerson(dto)).rejects.toThrow(

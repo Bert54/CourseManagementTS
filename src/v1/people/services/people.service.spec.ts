@@ -4,7 +4,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { PeopleService } from './people.service';
 import { PeopleDao } from '../dao';
 import { PersonEntity } from '../entities';
-import { AddPersonDtoBase } from '../dto';
+import { AddPersonDto } from '../dto';
 import { PersonAlreadyExistsError } from '../errors';
 import { NotFoundError } from '../../common/errors';
 
@@ -169,7 +169,7 @@ describe('PeopleService', () => {
       person.id = 1;
       person.name = 'james';
 
-      const dto = createMock<AddPersonDtoBase>();
+      const dto = createMock<AddPersonDto>();
       dto.name = 'james';
 
       dto.toPersonEntity.mockReturnValue(person);
@@ -188,7 +188,7 @@ describe('PeopleService', () => {
         return Promise.reject(new PersonAlreadyExistsError('already exists'));
       });
 
-      const dto = createMock<AddPersonDtoBase>();
+      const dto = createMock<AddPersonDto>();
       dto.name = 'james';
 
       expect(peopleService.addPerson(dto)).rejects.toThrow(

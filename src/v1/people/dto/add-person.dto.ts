@@ -1,4 +1,5 @@
-import { AddPersonDtoBase } from './add-person-base.dto';
+import { IsNotEmpty, IsString, Length } from 'class-validator';
+
 import {
   AdministratorEntity,
   PersonEntity,
@@ -8,7 +9,21 @@ import {
 import { PersonRolesEnum } from '../enums';
 import { UnknownRoleError } from '../errors';
 
-export class AddPersonDto extends AddPersonDtoBase {
+export class AddPersonDto {
+  @IsString()
+  @IsNotEmpty()
+  @Length(2, 100)
+  name: string;
+
+  @IsString()
+  @IsNotEmpty()
+  role: string;
+
+  format(): void {
+    this.name = this.name.trim();
+    this.role = this.role.trim().toLowerCase();
+  }
+
   toPersonEntity(): PersonEntity {
     this.format();
     switch (this.role) {

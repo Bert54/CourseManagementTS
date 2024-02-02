@@ -1,4 +1,3 @@
-import { createMock } from '@golevelup/ts-jest';
 import {
   ArgumentMetadata,
   BadRequestException,
@@ -13,7 +12,6 @@ import {
   TeacherEntity,
 } from '../entities';
 import { UnknownRoleError } from '../errors';
-import { AddPersonDtoBase } from './add-person-base.dto';
 
 describe('AddPersonDto', () => {
   // ------------------------------------
@@ -167,11 +165,11 @@ describe('AddPersonDto', () => {
     });
 
     it('Should be OK', () => {
-      const dto = createMock<AddPersonDtoBase>();
+      const dto = new AddPersonDto();
       dto.name = 'james';
       dto.role = 'administrator';
 
-      const transformResult: Promise<AddPersonDtoBase> = validator.transform(
+      const transformResult: Promise<AddPersonDto> = validator.transform(
         dto,
         metadata,
       );
@@ -180,11 +178,11 @@ describe('AddPersonDto', () => {
     });
 
     it('Should be OK in spite of bad role specified', () => {
-      const dto = createMock<AddPersonDtoBase>();
+      const dto = new AddPersonDto();
       dto.name = 'jaws';
       dto.role = 'bounty hunter';
 
-      const transformResult: Promise<AddPersonDtoBase> = validator.transform(
+      const transformResult: Promise<AddPersonDto> = validator.transform(
         dto,
         metadata,
       );
@@ -193,11 +191,11 @@ describe('AddPersonDto', () => {
     });
 
     it('Should throw due to empty name', () => {
-      const dto = createMock<AddPersonDtoBase>();
+      const dto = new AddPersonDto();
       dto.name = '';
       dto.role = 'administrator';
 
-      const transformResult: Promise<AddPersonDtoBase> = validator.transform(
+      const transformResult: Promise<AddPersonDto> = validator.transform(
         dto,
         metadata,
       );
@@ -206,11 +204,11 @@ describe('AddPersonDto', () => {
     });
 
     it('Should throw due to name too short', () => {
-      const dto = createMock<AddPersonDtoBase>();
+      const dto = new AddPersonDto();
       dto.name = 'j';
       dto.role = 'administrator';
 
-      const transformResult: Promise<AddPersonDtoBase> = validator.transform(
+      const transformResult: Promise<AddPersonDto> = validator.transform(
         dto,
         metadata,
       );
@@ -219,12 +217,12 @@ describe('AddPersonDto', () => {
     });
 
     it('Should throw due to name too long', () => {
-      const dto = createMock<AddPersonDtoBase>();
+      const dto = new AddPersonDto();
       dto.name =
         'jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj';
       dto.role = 'administrator';
 
-      const transformResult: Promise<AddPersonDtoBase> = validator.transform(
+      const transformResult: Promise<AddPersonDto> = validator.transform(
         dto,
         metadata,
       );
@@ -233,11 +231,11 @@ describe('AddPersonDto', () => {
     });
 
     it('Should throw due to empty role', () => {
-      const dto = createMock<AddPersonDtoBase>();
+      const dto = new AddPersonDto();
       dto.name = 'james';
       dto.role = '';
 
-      const transformResult: Promise<AddPersonDtoBase> = validator.transform(
+      const transformResult: Promise<AddPersonDto> = validator.transform(
         dto,
         metadata,
       );

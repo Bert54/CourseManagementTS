@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import { AddPersonDtoBase } from '../dto';
+import { AddPersonDto } from '../dto';
 import { PersonEntity } from '../entities';
 import { PeopleDao } from '../dao';
 import { GetUserOptionsInterface } from '../interfaces';
@@ -10,7 +10,7 @@ import { PeopleRelationsEnum } from '../enums';
 export class PeopleService {
   constructor(private peopleDao: PeopleDao) {}
 
-  addPerson(addPersonDto: AddPersonDtoBase): Promise<PersonEntity> {
+  addPerson(addPersonDto: AddPersonDto): Promise<PersonEntity> {
     let personEntity: PersonEntity;
     try {
       personEntity = addPersonDto.toPersonEntity();

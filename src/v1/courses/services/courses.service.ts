@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
 import { CoursesDao } from '../dao';
-import { AddCourseBaseDto } from '../dto';
+import { AddCourseDto } from '../dto';
 import { CourseEntity } from '../entities';
 import { ClassesMembershipService, ClassesService } from '../../classes';
 import { CourseCreationForbiddenError } from '../errors';
@@ -18,7 +18,7 @@ export class CoursesService {
 
   async addCourse(
     teacherId: number,
-    addCourseDto: AddCourseBaseDto,
+    addCourseDto: AddCourseDto,
   ): Promise<CourseEntity> {
     // First check for existence of class
     await this.classesMembership.getClass(addCourseDto.student_class);
