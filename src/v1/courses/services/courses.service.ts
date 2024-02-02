@@ -20,23 +20,27 @@ export class CoursesService {
     teacherId: number,
     addCourseDto: AddCourseDto,
   ): Promise<CourseEntity> {
-    // First check for existence of class
-    await this.classesMembership.getClass(addCourseDto.student_class);
-
-    // Then check if the person is a member of the class
-    await this.classesMembershipService
-      .checkMembership(teacherId, addCourseDto.student_class)
-      .then((isMember: boolean): void => {
-        if (!isMember) {
-          throw new CourseCreationForbiddenError(
-            `Person is not allowed to create new courses for this class`,
-          );
-        }
-        return undefined;
-      });
-
-    // Finally perform the operation
-    return await this.coursesDao.save(addCourseDto.toCourseEntity(teacherId));
+    // First check for existence of class (used method throws an error if that's not the case)
+    return await this.classesMembership
+      .getClass(addCourseDto.student_class)
+      // Then check if the person is a member of the class
+      .then(async () => {
+        await this.classesMembershipService
+          .checkMembership(teacherId, addCourseDto.student_class)
+          .then((isMember: boolean): void => {
+            if (!isMember) {
+              throw new CourseCreationForbiddenError(
+                `Person is not allowed to create new courses for this class`,
+              );
+            }
+            return undefined;
+          });
+      })
+      // Finally perform the operation
+      .then(
+        async () =>
+          await this.coursesDao.save(addCourseDto.toCourseEntity(teacherId)),
+      );
   }
 
   getAllOwnCourses(teacherId: number): Promise<CourseEntity[]> {
