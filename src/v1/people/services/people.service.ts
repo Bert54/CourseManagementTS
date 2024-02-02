@@ -35,9 +35,11 @@ export class PeopleService {
         relations.includes(PeopleRelationsEnum.Memberships_ClassInfo)
       ) {
         person.classes = [];
-        person.memberships.forEach((membership) =>
-          person.classes.push(membership.class_info),
-        );
+        if (!!person.memberships) {
+          person.memberships.forEach((membership) =>
+            person.classes.push(membership.class_info),
+          );
+        }
       }
       return person;
     });
