@@ -8,7 +8,6 @@ import { createMock } from '@golevelup/ts-jest';
 import { AddCourseDto } from './add-course.dto';
 import { CourseEntity } from '../entities';
 import { AddCourseBaseDto } from './add-course-base.dto';
-import { AddPersonDtoBase } from '../../people';
 
 describe('AddCourseDto', () => {
   // ------------------------------------
@@ -17,7 +16,7 @@ describe('AddCourseDto', () => {
   describe('format', () => {
     let expected: AddCourseDto;
 
-    beforeEach(async () => {
+    beforeEach(() => {
       expected = new AddCourseDto();
       expected.student_class = 'MI6';
       expected.title = 'How to be a good secret agent';
@@ -75,7 +74,7 @@ describe('AddCourseDto', () => {
     let validator: ValidationPipe;
     let metadata: ArgumentMetadata;
 
-    beforeEach(async () => {
+    beforeEach(() => {
       validator = new ValidationPipe({
         transform: true,
         whitelist: true,
@@ -94,7 +93,7 @@ describe('AddCourseDto', () => {
       dto.title = 'How to be a good secret agent';
       dto.content = `It's a secret!`;
 
-      const transformResult: Promise<AddPersonDtoBase> = validator.transform(
+      const transformResult: Promise<AddCourseBaseDto> = validator.transform(
         dto,
         metadata,
       );
@@ -108,7 +107,7 @@ describe('AddCourseDto', () => {
       dto.title = 'How to be a good secret agent';
       dto.content = `It's a secret!`;
 
-      const transformResult: Promise<AddPersonDtoBase> = validator.transform(
+      const transformResult: Promise<AddCourseBaseDto> = validator.transform(
         dto,
         metadata,
       );
@@ -122,7 +121,7 @@ describe('AddCourseDto', () => {
       dto.title = 'How to be a good secret agent';
       dto.content = `It's a secret!`;
 
-      const transformResult: Promise<AddPersonDtoBase> = validator.transform(
+      const transformResult: Promise<AddCourseBaseDto> = validator.transform(
         dto,
         metadata,
       );
@@ -136,7 +135,7 @@ describe('AddCourseDto', () => {
       dto.title = '';
       dto.content = `It's a secret!`;
 
-      const transformResult: Promise<AddPersonDtoBase> = validator.transform(
+      const transformResult: Promise<AddCourseBaseDto> = validator.transform(
         dto,
         metadata,
       );
@@ -150,7 +149,7 @@ describe('AddCourseDto', () => {
       dto.title = '';
       dto.content = `It's a secret!`;
 
-      const transformResult: Promise<AddPersonDtoBase> = validator.transform(
+      const transformResult: Promise<AddCourseBaseDto> = validator.transform(
         dto,
         metadata,
       );
@@ -165,7 +164,7 @@ describe('AddCourseDto', () => {
         'How to be a good secret agentHow to be a good secret agentHow to be a good secret agentHow to be a good secret agentHow to be a good secret agentHow to be a good secret agentHow to be a good secret agent';
       dto.content = `It's a secret!`;
 
-      const transformResult: Promise<AddPersonDtoBase> = validator.transform(
+      const transformResult: Promise<AddCourseBaseDto> = validator.transform(
         dto,
         metadata,
       );
@@ -179,7 +178,7 @@ describe('AddCourseDto', () => {
       dto.title = 'How to be a good secret agent';
       dto.content = ``;
 
-      const transformResult: Promise<AddPersonDtoBase> = validator.transform(
+      const transformResult: Promise<AddCourseBaseDto> = validator.transform(
         dto,
         metadata,
       );

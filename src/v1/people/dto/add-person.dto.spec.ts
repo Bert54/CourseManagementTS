@@ -1,5 +1,9 @@
 import { createMock } from '@golevelup/ts-jest';
-import { ArgumentMetadata, BadRequestException, ValidationPipe } from '@nestjs/common';
+import {
+  ArgumentMetadata,
+  BadRequestException,
+  ValidationPipe,
+} from '@nestjs/common';
 
 import { AddPersonDto } from './add-person.dto';
 import {
@@ -149,7 +153,7 @@ describe('AddPersonDto', () => {
     let validator: ValidationPipe;
     let metadata: ArgumentMetadata;
 
-    beforeEach(async () => {
+    beforeEach(() => {
       validator = new ValidationPipe({
         transform: true,
         whitelist: true,
