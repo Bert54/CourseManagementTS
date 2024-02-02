@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ClassesMembershipDao } from '../dao';
-import { AddMembershipBaseDto } from '../dto';
+import { AddMembershipDto } from '../dto';
 import { ClassMembershipEntity } from '../entities';
 
 @Injectable()
@@ -9,7 +9,7 @@ export class ClassesMembershipService {
 
   joinClass(
     personId: number,
-    addMembershipDto: AddMembershipBaseDto,
+    addMembershipDto: AddMembershipDto,
   ): Promise<ClassMembershipEntity> {
     return this.classesMembershipDao.save(
       addMembershipDto.toClassMembershipEntity(personId),
