@@ -2,14 +2,18 @@ import { createMock, DeepMocked } from '@golevelup/ts-jest';
 import { Test, TestingModule } from '@nestjs/testing';
 
 import { CoursesService } from './courses.service';
-import { PeopleService, PersonEntity } from '../../people';
 import { CourseEntity } from '../entities';
 import { AddCourseDto } from '../dto';
 import { CoursesDao } from '../dao';
-import { ClassesMembershipService, ClassesService } from '../../classes';
 import { ClassEntity, ClassMembershipEntity } from '../../classes/entities';
 import { NotFoundError } from '../../common/errors';
 import { CourseCreationForbiddenError } from '../errors';
+import {
+  ClassesMembershipService,
+  ClassesService,
+} from '../../classes/services';
+import { PeopleService } from '../../people/services';
+import { PersonEntity } from '../../people/entities';
 
 describe('CoursesService', () => {
   let coursesService: CoursesService;

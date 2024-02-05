@@ -3,10 +3,10 @@ import { Test, TestingModule } from '@nestjs/testing';
 
 import { CoursesController } from './courses.controller';
 import { CoursesService } from '../services';
-import { CheckPermissionService } from '../../common/modules/authorization';
 import { CourseEntity } from '../entities';
 import { AddCourseDto } from '../dto';
 import { CourseAlreadyExistsError, CourseNotFoundError } from '../errors';
+import { CheckPermissionService } from '../../common/modules/authorization/check-permission';
 
 const getCourseMockImplementation = (
   course1: CourseEntity,

@@ -5,10 +5,11 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+
 import { ClassMembershipEntity } from './class-membership.entity';
-import { PersonEntity } from '../../people';
 import { Exclude } from 'class-transformer';
-import { CourseEntity } from '../../courses';
+import { PersonEntity } from '../../people/entities';
+import { CourseEntity } from '../../courses/entities';
 
 @Entity('class')
 export class ClassEntity {

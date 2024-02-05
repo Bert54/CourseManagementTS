@@ -1,7 +1,8 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 
 import { ForbiddenError } from '../../../errors';
-import { PeopleService, PersonEntity } from '../../../../people';
+import { PeopleService } from '../../../../people/services';
+import { PersonEntity } from '../../../../people/entities';
 
 @Injectable()
 export class CheckPermissionService {

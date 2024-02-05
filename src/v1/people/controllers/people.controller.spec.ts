@@ -6,9 +6,9 @@ import { PeopleService } from '../services';
 import { PersonEntity } from '../entities';
 import { AddPersonDto } from '../dto';
 import { PersonAlreadyExistsError } from '../errors';
-import { CheckPermissionService } from '../../common/modules/authorization';
 import { NotFoundError } from '../../common/errors';
 import { GetUserOptionsInterface } from '../interfaces';
+import { CheckPermissionService } from '../../common/modules/authorization/check-permission';
 
 const getPersonMockImplementation = (
   person1: PersonEntity,

@@ -2,7 +2,6 @@ import { createMock, DeepMocked } from '@golevelup/ts-jest';
 import { Test, TestingModule } from '@nestjs/testing';
 
 import { ClassesMembershipService } from '../services';
-import { CheckPermissionService } from '../../common/modules/authorization';
 import { ClassesMembershipController } from './classes-membership.controller';
 import { ClassMembershipEntity } from '../entities';
 import { AddMembershipDto } from '../dto';
@@ -10,6 +9,7 @@ import {
   MembershipAlreadyExistsError,
   MembershipNotFoundError,
 } from '../errors';
+import { CheckPermissionService } from '../../common/modules/authorization/check-permission';
 
 describe('ClassesMembershipController', () => {
   let classesMembershipController: ClassesMembershipController;

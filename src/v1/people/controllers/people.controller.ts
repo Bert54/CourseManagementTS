@@ -4,12 +4,12 @@ import { PeopleService } from '../services';
 import { AddPersonDto } from '../dto';
 import { PersonEntity } from '../entities';
 import { PERSON_CREATE } from '../../../common/constants';
+import { NumericIdValidator } from '../../../common/validators';
+import { PeopleRelationsEnum } from '../enums';
 import {
   CheckPermission,
   CheckPermissionGuard,
-} from '../../common/modules/authorization';
-import { NumericIdValidator } from '../../../common/validators';
-import { PeopleRelationsEnum } from '../enums';
+} from '../../common/modules/authorization/check-permission';
 
 @Controller('/people')
 export class PeopleController {

@@ -5,8 +5,8 @@ import { CoursesController } from './controllers';
 import { CoursesService } from './services';
 import { CoursesDao } from './dao';
 import { CourseEntity } from './entities';
-import { ClassesModule } from '../classes';
-import { PeopleModule } from '../people';
+import { ClassesModule } from '../classes/classes.module';
+import { PeopleModule } from '../people/people.module';
 
 @Module({
   imports: [

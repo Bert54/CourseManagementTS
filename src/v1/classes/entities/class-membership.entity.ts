@@ -1,6 +1,7 @@
 import { Entity, JoinColumn, OneToOne, PrimaryColumn } from 'typeorm';
-import { PersonEntity } from '../../people';
+
 import { ClassEntity } from './class.entity';
+import { PersonEntity } from '../../people/entities';
 
 @Entity('classmembership')
 export class ClassMembershipEntity {

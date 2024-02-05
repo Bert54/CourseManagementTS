@@ -6,7 +6,7 @@ import { ClassesService } from './classes.service';
 import { ClassEntity, ClassMembershipEntity } from '../entities';
 import { AddClassDto } from '../dto';
 import { ClassAlreadyExistsError, ClassNotFoundError } from '../errors';
-import { PersonEntity } from '../../people';
+import { PersonEntity } from '../../people/entities';
 
 describe('ClassesService', () => {
   let classesService: ClassesService;

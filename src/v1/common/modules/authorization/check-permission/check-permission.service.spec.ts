@@ -1,9 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { createMock, DeepMocked } from '@golevelup/ts-jest';
 
-import { PeopleService, PersonEntity } from '../../../../people';
 import { CheckPermissionService } from './check-permission.service';
 import { ForbiddenError, NotFoundError } from '../../../errors';
+import { PeopleService } from '../../../../people/services';
+import { PersonEntity } from '../../../../people/entities';
 
 describe('CheckPermissionService', () => {
   let checkPermissionService: CheckPermissionService;

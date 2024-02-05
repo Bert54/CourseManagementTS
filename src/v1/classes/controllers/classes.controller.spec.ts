@@ -3,10 +3,10 @@ import { Test, TestingModule } from '@nestjs/testing';
 
 import { ClassesController } from './classes.controller';
 import { ClassesService } from '../services';
-import { CheckPermissionService } from '../../common/modules/authorization';
 import { ClassEntity } from '../entities';
 import { ClassAlreadyExistsError, ClassNotFoundError } from '../errors';
 import { AddClassDto } from '../dto';
+import { CheckPermissionService } from '../../common/modules/authorization/check-permission';
 
 const getClassMockImplementation = (
   class1: ClassEntity,

@@ -3,9 +3,13 @@ import { Injectable } from '@nestjs/common';
 import { CoursesDao } from '../dao';
 import { AddCourseDto } from '../dto';
 import { CourseEntity } from '../entities';
-import { ClassesMembershipService, ClassesService } from '../../classes';
 import { CourseCreationForbiddenError } from '../errors';
-import { PeopleService, PeopleRelationsEnum } from '../../people';
+import {
+  ClassesMembershipService,
+  ClassesService,
+} from '../../classes/services';
+import { PeopleService } from '../../people/services';
+import { PeopleRelationsEnum } from '../../people/enums';
 
 @Injectable()
 export class CoursesService {
