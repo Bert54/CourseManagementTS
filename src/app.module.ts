@@ -9,6 +9,7 @@ import {
 } from './config';
 import { V1Module } from './v1/v1.module';
 import { LoggerModule } from './common/modules/logger';
+import { ErrorLoggerInterceptor } from './common/interceptors';
 
 @Module({
   imports: [
@@ -25,6 +26,10 @@ import { LoggerModule } from './common/modules/logger';
     {
       provide: APP_INTERCEPTOR,
       useClass: ClassSerializerInterceptor,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: ErrorLoggerInterceptor,
     },
   ],
 })
