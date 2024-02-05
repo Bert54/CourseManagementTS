@@ -69,7 +69,7 @@ describe('ClassesService', () => {
   // Test suite for getClass
   // ------------------------------------
   describe('getClass', () => {
-    it('should successfully return a class with members', () => {
+    it('should successfully return a class with members', async () => {
       const person1 = createMock<PersonEntity>();
       person1.id = 1;
       person1.name = 'James';
@@ -90,14 +90,15 @@ describe('ClassesService', () => {
       const expectedClass = createMock<ClassEntity>();
       expectedClass.id = 7;
       expectedClass.name = 'MI6';
+      expectedClass.members_cls = [membership1, membership2];
       expectedClass.members = [person1, person2];
 
-      classesDao.findOneByName.mockReturnValue(
-        new Promise<ClassEntity>(() => originalClass),
-      );
+      classesDao.findOneByName.mockResolvedValue(originalClass);
 
-      expect(classesService.getClass('MI6')).resolves.toStrictEqual(
-        expectedClass,
+      const gottenClass: ClassEntity = await classesService.getClass('MI6');
+
+      expect(JSON.stringify(gottenClass)).toStrictEqual(
+        JSON.stringify(expectedClass),
       );
       expect(classesDao.findOneByName).toHaveBeenCalledTimes(1);
     });
