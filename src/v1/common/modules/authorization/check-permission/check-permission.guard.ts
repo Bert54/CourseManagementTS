@@ -29,12 +29,18 @@ export class CheckPermissionGuard implements CanActivate {
     if (!permissionToCheck) {
       return true;
     }
-    const personIdToCheckStr = context.switchToHttp().getRequest().headers[
-      HEADER_WITH_PERSON_ID
-    ];
+
+    // need to first check if there are headers to avoid a TypeError
+    const headers = context.switchToHttp().getRequest().headers;
+    if (!headers) {
+      throw handleError(new UnauthorizedError('No person ID provided'));
+    }
+
+    const personIdToCheckStr = headers[HEADER_WITH_PERSON_ID];
     if (!personIdToCheckStr) {
       throw handleError(new UnauthorizedError('No person ID provided'));
     }
+
     const personIdToCheck = Number(personIdToCheckStr);
     if (isNaN(personIdToCheck)) {
       throw handleError(new BadRequestError('Invalid person ID provided'));

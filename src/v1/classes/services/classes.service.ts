@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
 
 import { ClassesDao } from '../dao';
-import { AddClassBaseDto } from '../dto';
+import { AddClassDto } from '../dto';
 import { ClassEntity } from '../entities';
 
 @Injectable()
 export class ClassesService {
   constructor(private classesDao: ClassesDao) {}
 
-  addClass(addClassDto: AddClassBaseDto): Promise<ClassEntity> {
+  addClass(addClassDto: AddClassDto): Promise<ClassEntity> {
     return this.classesDao.save(addClassDto.toClassEntity());
   }
 
@@ -16,9 +16,11 @@ export class ClassesService {
     return await this.classesDao.findOneByName(className).then((cls) => {
       // transfer people gotten from memberships directly into the class object
       cls.members = [];
-      cls.members_cls.forEach((membership) =>
-        cls.members.push(membership.person),
-      );
+      if (!!cls.members_cls) {
+        cls.members_cls.forEach((membership) =>
+          cls.members.push(membership.person),
+        );
+      }
       return cls;
     });
   }

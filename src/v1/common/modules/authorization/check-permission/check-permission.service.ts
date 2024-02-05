@@ -1,7 +1,8 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 
-import { PeopleService } from '../../../../people';
 import { ForbiddenError } from '../../../errors';
+import { PeopleService } from '../../../../people/services';
+import { PersonEntity } from '../../../../people/entities';
 
 @Injectable()
 export class CheckPermissionService {
@@ -11,12 +12,17 @@ export class CheckPermissionService {
   ) {}
 
   async hasPermission(personId: number, permission: string): Promise<boolean> {
-    const person = await this.peopleService.getPerson({
-      id: personId,
-    });
-    if (!person.getPermissions().includes(permission)) {
-      throw new ForbiddenError(`Person is not allowed to perform this action`);
-    }
-    return true;
+    return await this.peopleService
+      .getPerson({
+        id: personId,
+      })
+      .then((person: PersonEntity) => {
+        if (!person.getPermissions().includes(permission)) {
+          throw new ForbiddenError(
+            `Person is not allowed to perform this action`,
+          );
+        }
+        return true;
+      });
   }
 }

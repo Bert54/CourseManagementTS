@@ -5,10 +5,11 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+
 import { ClassMembershipEntity } from './class-membership.entity';
-import { PersonEntity } from '../../people';
 import { Exclude } from 'class-transformer';
-import { CourseEntity } from '../../courses';
+import { PersonEntity } from '../../people/entities';
+import { CourseEntity } from '../../courses/entities';
 
 @Entity('class')
 export class ClassEntity {
@@ -18,14 +19,14 @@ export class ClassEntity {
   @Column({ name: 'name' })
   name: string;
 
-  @OneToMany(() => ClassMembershipEntity, (membership) => membership.class_info)
+  @OneToMany('ClassMembershipEntity', 'class_info')
   @JoinColumn({ name: 'name', referencedColumnName: 'class_info' })
   @Exclude()
   members_cls: ClassMembershipEntity[];
 
   members: PersonEntity[];
 
-  @OneToMany(() => CourseEntity, (course) => course.cls)
+  @OneToMany('CourseEntity', 'cls')
   @JoinColumn({ name: 'name', referencedColumnName: 'student_class' })
   @Exclude()
   courses: CourseEntity[];

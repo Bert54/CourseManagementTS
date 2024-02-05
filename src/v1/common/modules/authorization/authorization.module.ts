@@ -4,7 +4,7 @@ import {
   CheckPermissionGuard,
   CheckPermissionService,
 } from './check-permission';
-import { PeopleModule } from '../../../people';
+import { PeopleModule } from '../../../people/people.module';
 
 @Global()
 @Module({

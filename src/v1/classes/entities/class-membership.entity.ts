@@ -1,6 +1,7 @@
 import { Entity, JoinColumn, OneToOne, PrimaryColumn } from 'typeorm';
-import { PersonEntity } from '../../people';
+
 import { ClassEntity } from './class.entity';
+import { PersonEntity } from '../../people/entities';
 
 @Entity('classmembership')
 export class ClassMembershipEntity {
@@ -10,11 +11,11 @@ export class ClassMembershipEntity {
   @PrimaryColumn('class_name')
   class_name: string;
 
-  @OneToOne(() => ClassEntity)
+  @OneToOne('ClassEntity')
   @JoinColumn({ name: 'class_name', referencedColumnName: 'name' })
   class_info: ClassEntity;
 
-  @OneToOne(() => PersonEntity)
+  @OneToOne('PersonEntity')
   @JoinColumn({ name: 'person_id', referencedColumnName: 'id' })
   person: PersonEntity;
 

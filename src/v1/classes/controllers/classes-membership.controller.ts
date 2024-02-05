@@ -12,11 +12,11 @@ import { baseRoute } from '../constants';
 import { ClassMembershipEntity } from '../entities';
 import { ClassesMembershipService } from '../services';
 import { AddMembershipDto } from '../dto';
+import { CLASS_JOIN, HEADER_WITH_PERSON_ID } from '../../../common/constants';
 import {
   CheckPermission,
   CheckPermissionGuard,
-} from '../../common/modules/authorization';
-import { CLASS_JOIN, HEADER_WITH_PERSON_ID } from '../../../common/constants';
+} from '../../common/modules/authorization/check-permission';
 
 @Controller(baseRoute + '/membership')
 export class ClassesMembershipController {

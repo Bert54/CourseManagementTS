@@ -12,16 +12,16 @@ import { CourseEntity } from '../entities';
 import { AddCourseDto } from '../dto';
 import { CoursesService } from '../services';
 import {
-  CheckPermission,
-  CheckPermissionGuard,
-} from '../../common/modules/authorization';
-import {
   CLASS_COURSE_FETCH,
   COURSE_CREATE,
   COURSE_FETCH,
   HEADER_WITH_PERSON_ID,
 } from '../../../common/constants';
 import { NumericIdValidator } from '../../../common/validators';
+import {
+  CheckPermission,
+  CheckPermissionGuard,
+} from '../../common/modules/authorization/check-permission';
 
 @Controller('/courses')
 export class CoursesController {

@@ -3,6 +3,6 @@ export interface SqlDatabaseConfig {
   host: string;
   port: number;
   username: string;
-  password: string;
+  password?: string;
   database: string;
 }

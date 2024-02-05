@@ -12,11 +12,11 @@ import { ClassesService } from '../services';
 import { ClassEntity } from '../entities';
 import { AddClassDto } from '../dto';
 import { baseRoute } from '../constants';
+import { CLASS_CREATE, CLASS_DELETE } from '../../../common/constants';
 import {
   CheckPermission,
   CheckPermissionGuard,
-} from '../../common/modules/authorization';
-import { CLASS_CREATE, CLASS_DELETE } from '../../../common/constants';
+} from '../../common/modules/authorization/check-permission';
 
 @Controller(baseRoute)
 export class ClassesController {

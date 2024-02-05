@@ -1,6 +1,6 @@
-import { PeopleModule } from './people';
-import { CoursesModule } from './courses';
-import { ClassesModule } from './classes';
+import { PeopleModule } from './people/people.module';
+import { CoursesModule } from './courses/courses.module';
+import { ClassesModule } from './classes/classes.module';
 
 const v1Prefix = '/api/v1';
 
